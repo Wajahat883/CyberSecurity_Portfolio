@@ -60,8 +60,18 @@ export function Contact() {
     }
   }
 
-  const contactItems = [
-    { icon: Mail, label: 'Email', value: profile.email, href: `mailto:${profile.email}` },
+  type ContactItem = {
+    icon: typeof Mail;
+    label: string;
+    value: string;
+    href: string | undefined;
+  };
+
+  const contactItems: ContactItem[] = [
+    // Email shown only when a real professional inbox is configured in lib/data.ts.
+    ...(profile.email
+      ? [{ icon: Mail, label: 'Email', value: profile.email, href: `mailto:${profile.email}` }]
+      : []),
     { icon: Linkedin, label: 'LinkedIn', value: `in/${profile.linkedinHandle}`, href: profile.linkedin },
     { icon: Github, label: 'GitHub', value: profile.githubHandle, href: profile.github },
     { icon: MapPin, label: 'Location', value: profile.location, href: undefined },
@@ -106,9 +116,17 @@ export function Contact() {
               <div key={label}>{inner}</div>
             );
           })}
-          <p className="px-1 font-mono text-[11px] leading-relaxed text-[var(--text-muted)]/80">
-            Note: the email above is a placeholder — update it in{' '}
-            <span className="text-accent-cyan">lib/data.ts</span> with a monitored inbox.
+          <p className="px-1 text-xs leading-relaxed text-[var(--text-muted)]/80">
+            The fastest way to reach me is{' '}
+            <a
+              href={profile.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-accent-cyan hover:underline"
+            >
+              LinkedIn
+            </a>
+            . A dedicated professional email will be added here soon.
           </p>
         </Reveal>
 
@@ -176,6 +194,11 @@ export function Contact() {
                 </>
               )}
             </button>
+
+            <p className="mt-3 text-[11px] leading-relaxed text-[var(--text-muted)]/70">
+              Your message is validated and submitted securely. Email delivery is being configured —
+              until then, connecting on LinkedIn is the most reliable way to reach me.
+            </p>
 
             {status === 'success' && (
               <p className="mt-4 flex items-center gap-2 rounded-lg border border-emerald-400/30 bg-emerald-400/10 px-4 py-3 text-sm text-emerald-300">

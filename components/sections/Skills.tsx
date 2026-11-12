@@ -20,21 +20,26 @@ export function Skills() {
     <Section id="skills" className="bg-[var(--bg-soft)]/40">
       <SectionHeading
         eyebrow="Technical Skills"
-        title="Tools & Technologies"
-        description="Skills grouped by domain. Levels are shown honestly — this reflects active learning, not claimed mastery."
+        title="Offensive, Defensive & Purple Team"
+        description="Skills grouped across the offensive and defensive domains that meet in Purple Teaming. Levels are shown honestly — this reflects active, hands-on learning, not claimed mastery."
       />
 
-      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-5 md:grid-cols-2">
         {skillCategories.map((category, i) => {
           const Icon = category.icon;
           return (
             <Reveal key={category.title} delayIndex={i} as="article">
               <div className="glass card-hover h-full rounded-xl p-6">
-                <div className="mb-5 flex items-center gap-3">
-                  <span className="flex h-10 w-10 items-center justify-center rounded-lg border border-accent-cyan/25 bg-accent-cyan/10">
+                <div className="mb-4 flex items-start gap-3">
+                  <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg border border-accent-cyan/25 bg-accent-cyan/10">
                     <Icon className="h-5 w-5 text-accent-cyan" />
                   </span>
-                  <h3 className="font-semibold">{category.title}</h3>
+                  <div>
+                    <h3 className="font-semibold">{category.title}</h3>
+                    <p className="mt-0.5 text-xs leading-relaxed text-[var(--text-muted)]">
+                      {category.description}
+                    </p>
+                  </div>
                 </div>
 
                 <ul className="flex flex-wrap gap-2">

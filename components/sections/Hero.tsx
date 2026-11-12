@@ -1,22 +1,14 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { ArrowRight, Download, Mail, Github, Linkedin, ShieldCheck, Terminal } from 'lucide-react';
-import { profile } from '@/lib/data';
-
-const terminalLines = [
-  { prompt: '$', text: 'whoami', accent: true },
-  { text: 'muhammad_wajahat — blue team analyst (in training)' },
-  { prompt: '$', text: 'cat focus.txt', accent: true },
-  { text: 'SOC · SIEM · threat hunting · web app security' },
-  { prompt: '$', text: 'status --learning', accent: true },
-  { text: 'HTB CDSA → in progress' },
-];
+import { ArrowRight, Download, Mail, Github, Linkedin, Terminal, Blend } from 'lucide-react';
+import { profile, terminalLines } from '@/lib/data';
+import { ProfileImage } from '@/components/ui/ProfileImage';
 
 export function Hero() {
   return (
     <section id="home" className="relative overflow-hidden pt-32 pb-20 sm:pt-40 sm:pb-28">
-      <div className="container-page grid items-center gap-12 lg:grid-cols-[1.1fr_0.9fr]">
+      <div className="container-page grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
         {/* Left — copy */}
         <div>
           <motion.div
@@ -29,7 +21,7 @@ export function Hero() {
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent-cyan opacity-75" />
               <span className="relative inline-flex h-2 w-2 rounded-full bg-accent-cyan" />
             </span>
-            Available for cybersecurity opportunities
+            Open to cybersecurity opportunities
           </motion.div>
 
           <motion.h1
@@ -45,7 +37,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.12 }}
-            className="mt-4 text-lg font-medium text-gradient sm:text-xl"
+            className="mt-4 text-base font-semibold leading-snug text-gradient sm:text-lg"
           >
             {profile.title}
           </motion.p>
@@ -117,49 +109,64 @@ export function Hero() {
           </motion.div>
         </div>
 
-        {/* Right — terminal card */}
+        {/* Right — profile photo + terminal */}
         <motion.div
           initial={{ opacity: 0, scale: 0.96, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.2 }}
-          className="relative mx-auto w-full max-w-md"
+          className="mx-auto w-full max-w-sm"
         >
-          <div className="animate-float">
-            <div className="glass overflow-hidden rounded-xl shadow-glow">
-              <div className="flex items-center gap-2 border-b border-[var(--border)] px-4 py-3">
-                <span className="h-3 w-3 rounded-full bg-red-400/70" />
-                <span className="h-3 w-3 rounded-full bg-yellow-400/70" />
-                <span className="h-3 w-3 rounded-full bg-green-400/70" />
-                <span className="ml-2 inline-flex items-center gap-1.5 font-mono text-xs text-[var(--text-muted)]">
-                  <Terminal className="h-3 w-3" /> ~/wajahat
-                </span>
+          {/* Profile photo */}
+          <div className="relative mx-auto w-fit">
+            <div className="absolute -inset-3 rounded-[2rem] bg-gradient-to-br from-accent-cyan/25 via-accent-blue/15 to-transparent blur-xl" aria-hidden />
+            <div className="relative rounded-[1.75rem] bg-gradient-to-br from-accent-cyan/60 via-accent-blue/40 to-accent-cyan/10 p-[2px] shadow-glow">
+              <div className="overflow-hidden rounded-[1.65rem] bg-base-800">
+                <ProfileImage
+                  size={260}
+                  priority
+                  sizes="(max-width: 640px) 220px, 260px"
+                  rounded="2xl"
+                  className="!h-[260px] !w-[260px]"
+                />
               </div>
-              <div className="space-y-2 p-5 font-mono text-sm">
-                {terminalLines.map((line, i) => (
-                  <motion.div
-                    key={i}
-                    initial={{ opacity: 0, x: -8 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.4, delay: 0.5 + i * 0.15 }}
-                    className="flex gap-2"
-                  >
-                    {line.prompt && <span className="text-accent-cyan">{line.prompt}</span>}
-                    <span className={line.accent ? 'text-[var(--text)]' : 'text-[var(--text-muted)]'}>
-                      {line.text}
-                    </span>
-                  </motion.div>
-                ))}
-                <span className="inline-block h-4 w-2 animate-pulse bg-accent-cyan align-middle" />
+            </div>
+
+            {/* Floating role badge */}
+            <div className="glass absolute -bottom-4 -left-5 flex items-center gap-2 rounded-lg px-3 py-2 shadow-glow">
+              <Blend className="h-5 w-5 text-accent-cyan" />
+              <div className="leading-tight">
+                <p className="text-xs font-semibold">Purple Team</p>
+                <p className="font-mono text-[10px] text-[var(--text-muted)]">Offensive + Defensive</p>
               </div>
             </div>
           </div>
 
-          {/* Floating badge */}
-          <div className="glass absolute -bottom-5 -left-5 hidden items-center gap-2 rounded-lg px-3 py-2 shadow-glow sm:flex">
-            <ShieldCheck className="h-5 w-5 text-accent-cyan" />
-            <div className="leading-tight">
-              <p className="text-xs font-semibold">Blue Team</p>
-              <p className="font-mono text-[10px] text-[var(--text-muted)]">Defensive focus</p>
+          {/* Terminal card */}
+          <div className="glass mt-8 overflow-hidden rounded-xl shadow-glow">
+            <div className="flex items-center gap-2 border-b border-[var(--border)] px-4 py-2.5">
+              <span className="h-3 w-3 rounded-full bg-red-400/70" />
+              <span className="h-3 w-3 rounded-full bg-yellow-400/70" />
+              <span className="h-3 w-3 rounded-full bg-green-400/70" />
+              <span className="ml-2 inline-flex items-center gap-1.5 font-mono text-xs text-[var(--text-muted)]">
+                <Terminal className="h-3 w-3" /> ~/wajahat
+              </span>
+            </div>
+            <div className="space-y-1.5 p-4 font-mono text-[13px]">
+              {terminalLines.map((line, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, x: -8 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.4, delay: 0.5 + i * 0.15 }}
+                  className="flex gap-2"
+                >
+                  {line.prompt && <span className="text-accent-cyan">{line.prompt}</span>}
+                  <span className={line.accent ? 'text-[var(--text)]' : 'text-[var(--text-muted)]'}>
+                    {line.text}
+                  </span>
+                </motion.div>
+              ))}
+              <span className="inline-block h-4 w-2 animate-pulse bg-accent-cyan align-middle" />
             </div>
           </div>
         </motion.div>

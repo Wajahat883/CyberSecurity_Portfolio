@@ -6,7 +6,8 @@
  * edited in one place without touching component code.
  *
  * Placeholders are intentionally marked. Add exact titles, dates and
- * verification links as they become available.
+ * verification links as they become available. Nothing here is fabricated:
+ * missing repos, URLs, dates and credentials are left empty on purpose.
  */
 
 import type { LucideIcon } from 'lucide-react';
@@ -14,13 +15,14 @@ import {
   ShieldCheck,
   Swords,
   Network,
-  Terminal,
+  Blend,
   Code2,
   Search,
   Siren,
   Bug,
   GraduationCap,
   FlaskConical,
+  Trophy,
 } from 'lucide-react';
 
 /* -------------------------------------------------------------------------- */
@@ -29,37 +31,51 @@ import {
 
 export const profile = {
   name: 'Muhammad Wajahat',
-  title: 'Cybersecurity Enthusiast | Blue Team & Web Application Security',
+  // Public-facing positioning (offensive + defensive + purple team).
+  title: 'Cybersecurity Penetration Tester | Offensive & Defensive Security | Purple Teaming',
+  // Official employment title.
+  officialTitle: 'Cybersecurity Penetration Tester',
   location: 'Pakistan',
-  // Placeholder — update with a monitored professional inbox.
-  email: 'wajahat.security@example.com',
+  // Email intentionally withheld until a real professional inbox is provided.
+  // Leave as null to hide email everywhere; set a string to show it again.
+  email: null as string | null,
   github: 'https://github.com/Wajahat883',
   githubHandle: 'Wajahat883',
   linkedin: 'https://linkedin.com/in/muhammad-wajahat-8292092b7/',
   linkedinHandle: 'muhammad-wajahat',
   resumePath: '/resume/Muhammad-Wajahat-Resume.pdf',
+  photo: '/images/waji.png',
   intro:
-    'I am an aspiring cybersecurity professional focused on defensive security, threat hunting, security operations, and web application security. I combine structured learning with hands-on labs, security research, and practical projects to develop real-world cybersecurity skills.',
+    'I am a cybersecurity professional working across offensive and defensive security, with a focus on penetration testing, vulnerability assessment, security monitoring, threat hunting, and security investigations. My approach combines understanding how systems are attacked with learning how to detect, investigate, and strengthen defenses.',
 };
 
 export const siteMeta = {
   title: 'Muhammad Wajahat — Cybersecurity Portfolio',
   shortTitle: 'Muhammad Wajahat',
   description:
-    'Portfolio of Muhammad Wajahat — an aspiring cybersecurity professional focused on Blue Team operations, SOC & SIEM analysis, threat hunting, and web application security.',
+    'Muhammad Wajahat — Cybersecurity Penetration Tester working across offensive and defensive security with a Purple Team approach: penetration testing, vulnerability assessment, API & web application security, SIEM, threat hunting and security investigations.',
   keywords: [
     'Muhammad Wajahat',
     'Cybersecurity',
+    'Penetration Tester',
+    'Penetration Testing',
+    'Offensive Security',
+    'Defensive Security',
+    'Purple Team',
+    'Red Team',
     'Blue Team',
-    'SOC Analyst',
+    'Vulnerability Assessment',
+    'Web Application Security',
+    'API Security',
+    'SOC',
     'SIEM',
     'Threat Hunting',
-    'DFIR',
-    'Web Application Security',
-    'Penetration Testing',
+    'MITRE ATT&CK',
+    'Adversary Emulation',
+    'Detection Engineering',
     'Splunk',
     'Elastic',
-    'MITRE ATT&CK',
+    'Burp Suite',
   ],
 };
 
@@ -78,22 +94,39 @@ export const navLinks = [
 ];
 
 /* -------------------------------------------------------------------------- */
+/* Hero terminal animation                                                    */
+/* -------------------------------------------------------------------------- */
+
+export const terminalLines: { prompt?: string; text: string; accent?: boolean }[] = [
+  { prompt: '$', text: 'whoami', accent: true },
+  { text: 'muhammad_wajahat — penetration tester' },
+  { prompt: '$', text: 'cat approach.txt', accent: true },
+  { text: 'offensive + defensive = purple team' },
+  { prompt: '$', text: './assess --scope authorized', accent: true },
+  { text: 'recon → exploit → detect → report' },
+];
+
+/* -------------------------------------------------------------------------- */
 /* About                                                                      */
 /* -------------------------------------------------------------------------- */
 
 export const about = {
+  heading: 'Bridging Offensive and Defensive Security',
+  description:
+    'A penetration tester who works both sides of security — thinking like an attacker and a defender to validate and improve real-world defenses.',
   paragraphs: [
-    'My path into cybersecurity started with a Computer Science foundation and a growing fascination with how systems are attacked, defended, and investigated. What began as curiosity about web application vulnerabilities has become a focused commitment to defensive security and security operations.',
-    'Today I study the blue-team side of security in depth: building familiarity with SOC workflows, learning to analyze telemetry in SIEM platforms like Splunk and Elastic, investigating Windows event and Sysmon logs, and practicing structured threat hunting mapped to the MITRE ATT&CK framework. On the offensive side, I work through OWASP Top 10 issues and web application testing so I can understand attacker behavior well enough to defend against it.',
-    'With around 1.5 years of professional software development experience behind me, I now work as a Cybersecurity Penetration Tester — my focus and ongoing work are dedicated entirely to security. That developer background means I understand firsthand how modern web applications are built and deployed, which directly informs how I test and defend them. My long-term goal is to grow into Purple Team operations, where offensive and defensive perspectives meet.',
+    'My path into cybersecurity began on the build side. For around 1.5 years I worked as a frontend software developer at Comrex Private Limited, shipping production web applications and learning firsthand how modern systems are architected, deployed and broken.',
+    'That development role has since ended, and I now work at Comrex as a Cybersecurity Penetration Tester. My work is dedicated entirely to security: authorized penetration testing, web application and API security assessment, vulnerability identification, and reporting with practical remediation guidance.',
+    'I deliberately work across both sides of security. On the offensive side I test how systems break; on the defensive side I build practical skills in SIEM, threat hunting and security investigations using tools like Splunk, Elastic and Sysmon. Bringing the two together is the heart of a Purple Team approach — using real attacker techniques to validate detection and strengthen defenses.',
+    'This is the professional identity I am building: a penetration tester who thinks like an adversary and a defender at the same time, maps techniques to MITRE ATT&CK, and turns offensive insight into measurable security improvement.',
   ],
   focusAreas: [
-    'Defensive security & SOC operations',
-    'SIEM analysis & threat hunting',
-    'Network security',
-    'Web application penetration testing',
-    'Security automation',
-    'Purple Team operations (long-term goal)',
+    'Penetration testing & vulnerability assessment',
+    'Web application & API security',
+    'SIEM, threat hunting & investigations',
+    'Detection validation & adversary emulation',
+    'MITRE ATT&CK technique mapping',
+    'Purple Team approach to security improvement',
   ],
 };
 
@@ -106,77 +139,77 @@ export type SkillLevel = 'Foundational' | 'Practicing' | 'Comfortable';
 export interface SkillCategory {
   title: string;
   icon: LucideIcon;
-  accent: string;
+  description: string;
   skills: { name: string; level: SkillLevel }[];
 }
 
 export const skillCategories: SkillCategory[] = [
   {
-    title: 'Defensive Security',
-    icon: ShieldCheck,
-    accent: 'cyan',
-    skills: [
-      { name: 'Splunk', level: 'Practicing' },
-      { name: 'Elastic', level: 'Practicing' },
-      { name: 'Sysmon', level: 'Practicing' },
-      { name: 'Windows Event Logs', level: 'Practicing' },
-      { name: 'SIEM Fundamentals', level: 'Comfortable' },
-      { name: 'Threat Hunting', level: 'Foundational' },
-      { name: 'MITRE ATT&CK Fundamentals', level: 'Foundational' },
-    ],
-  },
-  {
     title: 'Offensive Security',
     icon: Swords,
-    accent: 'blue',
+    description: 'Attacking systems under authorization to find and prove real weaknesses.',
     skills: [
+      { name: 'Penetration Testing', level: 'Practicing' },
+      { name: 'Web Application Security', level: 'Practicing' },
       { name: 'Burp Suite', level: 'Practicing' },
       { name: 'Nmap', level: 'Practicing' },
       { name: 'Metasploit', level: 'Foundational' },
       { name: 'OWASP Top 10', level: 'Comfortable' },
-      { name: 'Web App Security Testing', level: 'Practicing' },
+      { name: 'API Security', level: 'Practicing' },
       { name: 'Reconnaissance', level: 'Practicing' },
+      { name: 'Vulnerability Assessment', level: 'Practicing' },
     ],
   },
   {
-    title: 'Networking',
+    title: 'Defensive Security',
+    icon: ShieldCheck,
+    description: 'Detecting, investigating and responding to malicious activity.',
+    skills: [
+      { name: 'SOC Operations', level: 'Foundational' },
+      { name: 'SIEM', level: 'Practicing' },
+      { name: 'Splunk', level: 'Practicing' },
+      { name: 'Elastic', level: 'Practicing' },
+      { name: 'Sysmon', level: 'Practicing' },
+      { name: 'Windows Event Logs', level: 'Practicing' },
+      { name: 'Threat Hunting', level: 'Foundational' },
+      { name: 'MITRE ATT&CK', level: 'Foundational' },
+      { name: 'Detection Engineering', level: 'Foundational' },
+      { name: 'Incident Investigation', level: 'Foundational' },
+    ],
+  },
+  {
+    title: 'Purple Team Operations',
+    icon: Blend,
+    description: 'Developing — studied and practised in labs, building toward hands-on delivery.',
+    skills: [
+      { name: 'Adversary Emulation', level: 'Foundational' },
+      { name: 'Attack Simulation', level: 'Foundational' },
+      { name: 'Detection Validation', level: 'Foundational' },
+      { name: 'MITRE ATT&CK Mapping', level: 'Foundational' },
+      { name: 'Detection Gap Analysis', level: 'Foundational' },
+      { name: 'Security Control Validation', level: 'Foundational' },
+      { name: 'Red / Blue Collaboration', level: 'Foundational' },
+      { name: 'Threat Detection Improvement', level: 'Foundational' },
+    ],
+  },
+  {
+    title: 'Networking & Systems',
     icon: Network,
-    accent: 'sky',
+    description: 'The protocol and operating-system fundamentals underneath both sides.',
     skills: [
       { name: 'TCP/IP', level: 'Comfortable' },
       { name: 'DNS', level: 'Comfortable' },
       { name: 'HTTP/HTTPS', level: 'Comfortable' },
       { name: 'Wireshark', level: 'Practicing' },
-      { name: 'Network Fundamentals', level: 'Comfortable' },
-    ],
-  },
-  {
-    title: 'Operating Systems',
-    icon: Terminal,
-    accent: 'cyan',
-    skills: [
-      { name: 'Kali Linux', level: 'Practicing' },
       { name: 'Linux', level: 'Comfortable' },
+      { name: 'Kali Linux', level: 'Practicing' },
       { name: 'Windows', level: 'Comfortable' },
-    ],
-  },
-  {
-    title: 'Development',
-    icon: Code2,
-    accent: 'blue',
-    skills: [
-      { name: 'JavaScript', level: 'Comfortable' },
-      { name: 'React', level: 'Comfortable' },
-      { name: 'Next.js', level: 'Comfortable' },
-      { name: 'Node.js', level: 'Practicing' },
-      { name: 'MongoDB', level: 'Practicing' },
-      { name: 'TypeScript', level: 'Practicing' },
     ],
   },
 ];
 
 /* -------------------------------------------------------------------------- */
-/* Certifications & training                                                  */
+/* Certifications, training & awards                                          */
 /* -------------------------------------------------------------------------- */
 
 export interface Certification {
@@ -220,16 +253,24 @@ export const certifications: Certification[] = [
     // credentialUrl: 'ADD_VERIFICATION_LINK',
   },
   {
-    title: 'eHunar Scholarship Program',
-    issuer: 'eHunar',
-    status: 'Completed',
-    // credentialUrl: 'ADD_VERIFICATION_LINK',
-  },
-  {
     title: 'Certified Defensive Security Analyst (CDSA)',
     issuer: 'Hack The Box',
     status: 'In Progress',
-    note: 'Currently learning — not yet certified.',
+    note: 'Currently Learning — Not Yet Certified.',
+  },
+];
+
+export interface Award {
+  title: string;
+  issuer: string;
+  note?: string;
+}
+
+export const awards: Award[] = [
+  {
+    title: 'eHunar Scholarship Program',
+    issuer: 'eHunar',
+    note: 'Selected into the scholarship / training program.',
   },
 ];
 
@@ -237,78 +278,102 @@ export const certifications: Certification[] = [
 /* Projects                                                                   */
 /* -------------------------------------------------------------------------- */
 
-export type ProjectCategory = 'Security Tool' | 'Web App Security' | 'AI / Platform' | 'Defensive Labs';
+export type ProjectCategory =
+  | 'Offensive Security'
+  | 'Defensive Security'
+  | 'Purple Teaming'
+  | 'Security Development';
+
+export type ProjectStatus = 'In Development' | 'Completed' | 'Ongoing' | 'Concept';
 
 export interface Project {
   title: string;
   category: ProjectCategory;
   type: 'Personal Project' | 'Training / Labs';
-  description: string;
-  highlights: string[];
+  status: ProjectStatus;
+  overview: string;
+  problem: string;
+  architecture: string;
+  contribution: string;
+  methodology: string;
   technologies: string[];
   icon: LucideIcon;
   // Links intentionally omitted until repos / deployments are public.
   repoUrl?: string;
   liveUrl?: string;
+  image?: string;
 }
 
 export const projects: Project[] = [
   {
     title: 'Bug Finder Pro',
-    category: 'Security Tool',
+    category: 'Security Development',
     type: 'Personal Project',
-    description:
-      'A cybersecurity-focused web tool for URL security scanning, vulnerability identification, AI-assisted finding triage, CVSS-based prioritization, and security report generation.',
-    highlights: [
-      'URL security scanning & vulnerability identification',
-      'AI-assisted triage of findings',
-      'CVSS-based risk prioritization',
-      'Automated security report generation',
-    ],
+    status: 'In Development',
+    overview:
+      'A cybersecurity-focused web tool for URL security scanning, vulnerability identification, AI-assisted finding triage, CVSS-based prioritization and security report generation.',
+    problem:
+      'Reviewing scanner output by hand is slow, and raw findings are hard to prioritize without consistent severity scoring.',
+    architecture:
+      'Next.js / React frontend, Node.js API layer, MongoDB for persistence, containerised with Docker, with an AI API used for finding triage.',
+    contribution:
+      'Designing and building the scanning workflow, data model, and the AI-assisted triage and reporting pipeline.',
+    methodology:
+      'Findings are mapped to CVSS severity and OWASP categories so remediation can be prioritized by risk.',
     technologies: ['Next.js', 'React', 'Node.js', 'MongoDB', 'Docker', 'AI API'],
     icon: Bug,
   },
   {
     title: 'Tasklytics — Web App Security Assessment',
-    category: 'Web App Security',
+    category: 'Offensive Security',
     type: 'Personal Project',
-    description:
-      'Authorized security testing of a SaaS application built with Next.js, API routes, MongoDB and JWT authentication — focused on finding and documenting real-world web application weaknesses.',
-    highlights: [
-      'Authentication & session security review',
-      'API endpoint analysis',
-      'HTTP request / response inspection',
-      'JWT authentication analysis',
-    ],
+    status: 'Completed',
+    overview:
+      'An authorized security assessment of a SaaS task-management application built with Next.js, API routes, MongoDB and JWT authentication.',
+    problem:
+      'The application’s authentication flow and API surface needed an authorized review to surface real-world web application weaknesses.',
+    architecture:
+      'Target application: Next.js app with API routes, MongoDB data store and JWT-based authentication.',
+    contribution:
+      'Performed the authorized assessment end to end — mapped the API surface, inspected auth and session flows, and documented findings.',
+    methodology:
+      'Manual testing with Burp Suite against the OWASP Top 10, focused on authentication, session management and access control.',
     technologies: ['Next.js', 'API Routes', 'MongoDB', 'JWT', 'Burp Suite'],
     icon: ShieldCheck,
   },
   {
     title: 'CyberLearn AI',
-    category: 'AI / Platform',
+    category: 'Security Development',
     type: 'Personal Project',
-    description:
-      'An AI-powered cybersecurity learning platform concept that transforms technical learning materials into structured educational resources, diagrams and presentations.',
-    highlights: [
-      'Converts raw material into structured lessons',
-      'Generates diagrams & presentations',
-      'AI content pipeline via OpenRouter',
-    ],
+    status: 'Concept',
+    overview:
+      'An AI-powered learning platform concept that transforms dense technical material into structured educational resources, diagrams and presentations.',
+    problem:
+      'Turning raw technical and security material into clear, teachable content is slow and manual.',
+    architecture:
+      'React frontend, Node.js backend, MongoDB, and the OpenRouter API for AI-assisted generation.',
+    contribution:
+      'Concept design and prototyping of the content-transformation pipeline.',
+    methodology:
+      'A prompt-engineered pipeline that structures source material into lessons, diagrams and slides.',
     technologies: ['React', 'Node.js', 'MongoDB', 'OpenRouter API'],
     icon: Code2,
   },
   {
     title: 'HTB Defensive Security Investigations',
-    category: 'Defensive Labs',
+    category: 'Defensive Security',
     type: 'Training / Labs',
-    description:
-      'Hands-on defensive security learning on Hack The Box: investigating telemetry with Splunk and Elastic, analyzing Windows events, monitoring authentication, and hunting suspicious process activity.',
-    highlights: [
-      'Splunk & Elastic log analysis',
-      'Windows event & authentication monitoring',
-      'Suspicious process investigations',
-      'Structured threat hunting',
-    ],
+    status: 'Ongoing',
+    overview:
+      'Hands-on defensive security work on Hack The Box: investigating telemetry with Splunk and Elastic, analyzing Windows events, monitoring authentication and hunting suspicious process activity.',
+    problem:
+      'Building real detection and investigation skills requires practice against realistic telemetry, not just theory.',
+    architecture:
+      'Hack The Box lab environments using Splunk and Elastic over Windows event and Sysmon data.',
+    contribution:
+      'Completed investigations across authentication, process execution and threat-hunting scenarios.',
+    methodology:
+      'Analyst workflow: query telemetry, pivot on indicators, and map observed activity to MITRE ATT&CK.',
     technologies: ['Splunk', 'Elastic', 'Windows Logs', 'Sysmon', 'MITRE ATT&CK'],
     icon: Search,
   },
@@ -316,67 +381,71 @@ export const projects: Project[] = [
 
 export const projectCategories: ('All' | ProjectCategory)[] = [
   'All',
-  'Security Tool',
-  'Web App Security',
-  'AI / Platform',
-  'Defensive Labs',
+  'Offensive Security',
+  'Defensive Security',
+  'Purple Teaming',
+  'Security Development',
 ];
 
 /* -------------------------------------------------------------------------- */
 /* Hands-on labs                                                              */
 /* -------------------------------------------------------------------------- */
 
-export interface Lab {
+export type LabStatus = 'Completed' | 'Studying';
+
+export interface LabItem {
   title: string;
-  description: string;
-  tags: string[];
+  status: LabStatus;
 }
 
-export const labs: Lab[] = [
+export interface LabGroup {
+  category: string;
+  blurb: string;
+  icon: LucideIcon;
+  accent: 'red' | 'cyan' | 'purple';
+  labs: LabItem[];
+}
+
+export const labGroups: LabGroup[] = [
   {
-    title: 'Splunk Search & Reporting',
-    description: 'Writing SPL queries to search, correlate and report on security-relevant events.',
-    tags: ['Splunk', 'SIEM'],
+    category: 'Offensive Security Labs',
+    blurb: 'Authorized testing of applications, APIs and networks.',
+    icon: Swords,
+    accent: 'red',
+    labs: [
+      { title: 'Web Application Testing', status: 'Completed' },
+      { title: 'API Security Testing', status: 'Completed' },
+      { title: 'Network Reconnaissance', status: 'Completed' },
+      { title: 'Vulnerability Assessment', status: 'Completed' },
+      { title: 'Authentication Testing', status: 'Completed' },
+    ],
   },
   {
-    title: 'Windows Event Log Analysis',
-    description: 'Reading and interpreting Windows Security, System and Application logs for signs of compromise.',
-    tags: ['Windows', 'Logs'],
+    category: 'Defensive Security Labs',
+    blurb: 'Investigating telemetry and hunting for malicious activity.',
+    icon: ShieldCheck,
+    accent: 'cyan',
+    labs: [
+      { title: 'Splunk Investigations', status: 'Completed' },
+      { title: 'Windows Event Analysis', status: 'Completed' },
+      { title: 'Sysmon Investigations', status: 'Completed' },
+      { title: 'Kerberos Authentication Analysis', status: 'Completed' },
+      { title: 'Threat Hunting with Elastic', status: 'Completed' },
+      { title: 'Suspicious Process Investigations', status: 'Completed' },
+    ],
   },
   {
-    title: 'Sysmon Investigation',
-    description: 'Using Sysmon telemetry to trace process creation, network connections and file activity.',
-    tags: ['Sysmon', 'Endpoint'],
-  },
-  {
-    title: 'Failed Login Investigations',
-    description: 'Detecting brute-force and password-spraying patterns from authentication failure events.',
-    tags: ['Auth', 'Detection'],
-  },
-  {
-    title: 'Kerberos Authentication Analysis',
-    description: 'Analyzing Kerberos ticket events to spot abnormal authentication behavior.',
-    tags: ['Kerberos', 'AD'],
-  },
-  {
-    title: 'Suspicious Process Execution',
-    description: 'Investigating anomalous process chains and command-line activity on endpoints.',
-    tags: ['Endpoint', 'Hunting'],
-  },
-  {
-    title: 'Threat Hunting with Elastic',
-    description: 'Building hunting queries and dashboards in Elastic to surface malicious activity.',
-    tags: ['Elastic', 'Hunting'],
-  },
-  {
-    title: 'Network Reconnaissance',
-    description: 'Mapping hosts and services with Nmap and interpreting the results safely.',
-    tags: ['Nmap', 'Recon'],
-  },
-  {
-    title: 'Authorized Web Application Testing',
-    description: 'Testing web apps for OWASP Top 10 issues using Burp Suite in authorized lab environments.',
-    tags: ['Burp Suite', 'OWASP'],
+    category: 'Purple Team Exercises',
+    blurb: 'Currently studying — connecting attack techniques to detection.',
+    icon: Blend,
+    accent: 'purple',
+    labs: [
+      { title: 'Attack Technique Mapping', status: 'Studying' },
+      { title: 'Detection Validation', status: 'Studying' },
+      { title: 'Adversary Simulation', status: 'Studying' },
+      { title: 'Detection Coverage Analysis', status: 'Studying' },
+      { title: 'Security Control Improvement', status: 'Studying' },
+    ],
   },
 ];
 
@@ -426,12 +495,12 @@ export const experiences: ExperienceRole[] = [
     current: true,
     icon: Swords,
     summary:
-      'Transitioned into a dedicated security role, performing authorized penetration testing and web application security assessments. My work now focuses entirely on cybersecurity rather than software development.',
+      'My current role, dedicated entirely to security. I perform authorized penetration testing and security assessments, and apply a Purple Team mindset — using attacker techniques to understand and improve defensive coverage.',
     points: [
       'Conduct authorized penetration tests on web applications and APIs.',
-      'Identify, validate and document vulnerabilities aligned with the OWASP Top 10.',
+      'Perform web application and API security assessments and vulnerability identification.',
       'Assess authentication, session management and access-control weaknesses.',
-      'Produce clear security findings with practical remediation guidance for developers.',
+      'Document findings with clear, prioritized remediation guidance for developers.',
     ],
   },
   {
@@ -442,7 +511,7 @@ export const experiences: ExperienceRole[] = [
     current: false,
     icon: Code2,
     summary:
-      'Around 1.5 years building and maintaining modern web interfaces — a foundation that gives me a hands-on understanding of how web applications are architected and deployed, which directly strengthens my security work today.',
+      'Previous role — approximately 1.5 years building and maintaining production web interfaces. This gave me a hands-on understanding of how web applications are architected and deployed, which directly strengthens my security work today.',
     points: [
       'Built responsive, component-based user interfaces for production web applications.',
       'Worked with modern JavaScript frameworks and REST APIs across the frontend stack.',
@@ -459,4 +528,5 @@ export const experiences: ExperienceRole[] = [
 export const sectionIcons = {
   labs: FlaskConical,
   soc: Siren,
+  award: Trophy,
 };

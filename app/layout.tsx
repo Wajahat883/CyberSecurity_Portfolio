@@ -83,7 +83,8 @@ const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Person',
   name: profile.name,
-  jobTitle: profile.title,
+  jobTitle: profile.officialTitle,
+  description: profile.title,
   url: siteUrl,
   sameAs: [profile.github, profile.linkedin],
   address: {
@@ -91,12 +92,16 @@ const jsonLd = {
     addressCountry: 'Pakistan',
   },
   knowsAbout: [
-    'Cybersecurity',
-    'Blue Team Operations',
-    'SOC',
+    'Penetration Testing',
+    'Offensive Security',
+    'Defensive Security',
+    'Purple Teaming',
+    'Vulnerability Assessment',
+    'Web Application Security',
+    'API Security',
     'SIEM',
     'Threat Hunting',
-    'Web Application Security',
+    'MITRE ATT&CK',
   ],
 };
 

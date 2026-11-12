@@ -1,8 +1,10 @@
 # Muhammad Wajahat — Cybersecurity Portfolio
 
-A premium, dark-themed personal portfolio for **Muhammad Wajahat**, an aspiring
-cybersecurity professional focused on **Blue Team operations, SOC & SIEM
-analysis, threat hunting, and web application security**.
+A premium, dark-themed personal portfolio for **Muhammad Wajahat**, a
+**Cybersecurity Penetration Tester** working across **offensive and defensive
+security** with a **Purple Team** approach — penetration testing, vulnerability
+assessment, web & API security, SIEM, threat hunting and security
+investigations.
 
 Built with Next.js (App Router), TypeScript, Tailwind CSS, Framer Motion and
 Lucide icons — fully responsive, accessible, SEO-optimized and ready to deploy
@@ -17,8 +19,12 @@ on Vercel.
 - **Premium dark-first design** — deep navy / near-black surfaces, electric blue
   & cyan accents, selective glassmorphism and a subtle cyber grid.
 - **Dark / light mode toggle** with no flash of unstyled content (dark by default).
-- **Sections**: Hero, About, Technical Skills, Certifications & Training,
-  Projects (with category filtering), Hands-on Labs, Experience, Education, Contact.
+- **Professional profile photo** in the hero and about sections, served through
+  Next.js Image optimization with a graceful initials fallback.
+- **Sections**: Hero, About, Technical Skills (Offensive / Defensive / Purple
+  Team / Networking), Certifications & Awards, Projects (with category filtering
+  and rich detail cards), Hands-on Labs (offensive / defensive / purple), two-role
+  Experience timeline, Education, Contact.
 - **Working contact form** with client + server validation, honeypot spam
   protection, loading/success/error states, and optional email delivery.
 - **Fully responsive** across mobile, tablet and desktop.
@@ -101,9 +107,13 @@ and contact details. No component edits required.
 
 Common edits:
 
-- **Contact email** — update `profile.email` (currently a placeholder).
+- **Contact email** — `profile.email` is intentionally `null`, so no email is
+  shown publicly. Set it to your real professional inbox to display it everywhere.
+- **Profile photo** — replace `public/images/waji.png` with your preferred
+  portrait (keep the filename, or update `profile.photo`).
 - **Resume** — replace `public/resume/Muhammad-Wajahat-Resume.pdf` with your real
   PDF (keep the same filename, or update `profile.resumePath`).
+- **Experience dates** — set the exact role dates marked `// EDIT` in `experiences`.
 - **Certifications** — add `credentialUrl` values to each entry in
   `certifications` once you have verification links. The Hack The Box **CDSA** is
   intentionally marked **"Currently Learning"**, not completed.

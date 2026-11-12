@@ -1,4 +1,4 @@
-import { Shield, Github, Linkedin, Mail, ArrowUp } from 'lucide-react';
+import { Shield, Github, Linkedin, ArrowUp } from 'lucide-react';
 import { profile, navLinks } from '@/lib/data';
 
 export function Footer() {
@@ -18,8 +18,8 @@ export function Footer() {
               </span>
             </a>
             <p className="mt-3 text-sm leading-relaxed text-[var(--text-muted)]">
-              Aspiring cybersecurity professional focused on Blue Team operations, threat hunting, and
-              web application security.
+              Cybersecurity Penetration Tester working across offensive and defensive security — a
+              Purple Team approach to testing, detection and defense.
             </p>
             <div className="mt-4 flex items-center gap-3">
               <a
@@ -39,13 +39,6 @@ export function Footer() {
                 className="flex h-9 w-9 items-center justify-center rounded-lg border border-[var(--border)] text-[var(--text-muted)] transition-colors hover:border-accent-cyan/40 hover:text-accent-cyan"
               >
                 <Linkedin className="h-4 w-4" />
-              </a>
-              <a
-                href={`mailto:${profile.email}`}
-                aria-label="Email"
-                className="flex h-9 w-9 items-center justify-center rounded-lg border border-[var(--border)] text-[var(--text-muted)] transition-colors hover:border-accent-cyan/40 hover:text-accent-cyan"
-              >
-                <Mail className="h-4 w-4" />
               </a>
             </div>
           </div>

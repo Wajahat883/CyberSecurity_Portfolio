@@ -1,7 +1,7 @@
-import { Award, ExternalLink, Loader2, BadgeCheck } from 'lucide-react';
+import { Award, ExternalLink, Loader2, BadgeCheck, Trophy } from 'lucide-react';
 import { Section, SectionHeading } from '@/components/ui/Section';
 import { Reveal } from '@/components/ui/Reveal';
-import { certifications } from '@/lib/data';
+import { certifications, awards } from '@/lib/data';
 import { cn } from '@/lib/utils';
 
 export function Certifications() {
@@ -82,6 +82,35 @@ export function Certifications() {
           );
         })}
       </div>
+
+      {/* Awards & Programs */}
+      {awards.length > 0 && (
+        <div className="mt-12">
+          <Reveal className="mb-5">
+            <h3 className="flex items-center gap-2 font-mono text-xs font-semibold uppercase tracking-[0.18em] text-accent-cyan">
+              <Trophy className="h-4 w-4" /> Awards & Programs
+            </h3>
+          </Reveal>
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {awards.map((award, i) => (
+              <Reveal key={award.title} delayIndex={i} as="article">
+                <div className="glass card-hover flex h-full items-start gap-3 rounded-xl p-5">
+                  <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg border border-amber-400/30 bg-amber-400/10">
+                    <Trophy className="h-5 w-5 text-amber-300" />
+                  </span>
+                  <div>
+                    <h4 className="text-base font-semibold leading-snug">{award.title}</h4>
+                    <p className="mt-1 text-sm text-[var(--text-muted)]">{award.issuer}</p>
+                    {award.note && (
+                      <p className="mt-2 text-xs leading-relaxed text-[var(--text-muted)]">{award.note}</p>
+                    )}
+                  </div>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      )}
     </Section>
   );
 }

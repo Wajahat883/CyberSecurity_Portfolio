@@ -31,10 +31,10 @@
           stroke-linecap="round" stroke-linejoin="round"/>
   </g>
 
-  <text x="96" y="430" font-family="Inter, Arial, sans-serif" font-size="30"
-        fill="#22d3ee" letter-spacing="6" font-weight="600">CYBERSECURITY PORTFOLIO</text>
-  <text x="94" y="500" font-family="Inter, Arial, sans-serif" font-size="68"
+  <text x="96" y="420" font-family="Inter, Arial, sans-serif" font-size="28"
+        fill="#22d3ee" letter-spacing="5" font-weight="600">CYBERSECURITY PENETRATION TESTER</text>
+  <text x="94" y="490" font-family="Inter, Arial, sans-serif" font-size="66"
         fill="#e6edf6" font-weight="700">Muhammad Wajahat</text>
-  <text x="96" y="548" font-family="Inter, Arial, sans-serif" font-size="28"
-        fill="#8a99b3">Blue Team &#183; SOC &amp; SIEM &#183; Web Application Security</text>
+  <text x="96" y="538" font-family="Inter, Arial, sans-serif" font-size="27"
+        fill="#8a99b3">Offensive &amp; Defensive Security &#183; Purple Teaming</text>
 </svg>
