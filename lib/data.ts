@@ -23,6 +23,16 @@ import {
   GraduationCap,
   FlaskConical,
   Trophy,
+  Globe,
+  Radar,
+  ScanSearch,
+  KeyRound,
+  FileSearch,
+  Activity,
+  ShieldAlert,
+  Target,
+  Crosshair,
+  Workflow,
 } from 'lucide-react';
 
 /* -------------------------------------------------------------------------- */
@@ -292,15 +302,17 @@ export interface Project {
   type: 'Personal Project' | 'Training / Labs';
   status: ProjectStatus;
   overview: string;
-  problem: string;
-  architecture: string;
-  contribution: string;
+  purpose: string;
+  features: string[];
   methodology: string;
   technologies: string[];
   icon: LucideIcon;
   // Links intentionally omitted until repos / deployments are public.
+  // Do NOT invent these — add the real URL when the repo / demo is available.
   repoUrl?: string;
   liveUrl?: string;
+  // Real screenshot path (e.g. '/images/projects/bug-finder.png') when provided.
+  // When absent, a branded cover placeholder is shown instead of a fake screenshot.
   image?: string;
 }
 
@@ -312,12 +324,14 @@ export const projects: Project[] = [
     status: 'In Development',
     overview:
       'A cybersecurity-focused web tool for URL security scanning, vulnerability identification, AI-assisted finding triage, CVSS-based prioritization and security report generation.',
-    problem:
-      'Reviewing scanner output by hand is slow, and raw findings are hard to prioritize without consistent severity scoring.',
-    architecture:
-      'Next.js / React frontend, Node.js API layer, MongoDB for persistence, containerised with Docker, with an AI API used for finding triage.',
-    contribution:
-      'Designing and building the scanning workflow, data model, and the AI-assisted triage and reporting pipeline.',
+    purpose:
+      'Speed up security scanning and give findings consistent, risk-based prioritization.',
+    features: [
+      'URL & web application security scanning',
+      'AI-assisted triage of findings',
+      'CVSS-based risk prioritization',
+      'Automated security report generation',
+    ],
     methodology:
       'Findings are mapped to CVSS severity and OWASP categories so remediation can be prioritized by risk.',
     technologies: ['Next.js', 'React', 'Node.js', 'MongoDB', 'Docker', 'AI API'],
@@ -330,12 +344,14 @@ export const projects: Project[] = [
     status: 'Completed',
     overview:
       'An authorized security assessment of a SaaS task-management application built with Next.js, API routes, MongoDB and JWT authentication.',
-    problem:
-      'The application’s authentication flow and API surface needed an authorized review to surface real-world web application weaknesses.',
-    architecture:
-      'Target application: Next.js app with API routes, MongoDB data store and JWT-based authentication.',
-    contribution:
-      'Performed the authorized assessment end to end — mapped the API surface, inspected auth and session flows, and documented findings.',
+    purpose:
+      'Find and document real web application weaknesses through an authorized assessment.',
+    features: [
+      'Authorized end-to-end web app assessment',
+      'API surface mapping & endpoint analysis',
+      'JWT authentication & session review',
+      'Documented findings with remediation notes',
+    ],
     methodology:
       'Manual testing with Burp Suite against the OWASP Top 10, focused on authentication, session management and access control.',
     technologies: ['Next.js', 'API Routes', 'MongoDB', 'JWT', 'Burp Suite'],
@@ -348,12 +364,13 @@ export const projects: Project[] = [
     status: 'Concept',
     overview:
       'An AI-powered learning platform concept that transforms dense technical material into structured educational resources, diagrams and presentations.',
-    problem:
-      'Turning raw technical and security material into clear, teachable content is slow and manual.',
-    architecture:
-      'React frontend, Node.js backend, MongoDB, and the OpenRouter API for AI-assisted generation.',
-    contribution:
-      'Concept design and prototyping of the content-transformation pipeline.',
+    purpose:
+      'Turn dense technical material into clear, structured learning content.',
+    features: [
+      'Transforms raw material into structured lessons',
+      'Generates diagrams & presentations',
+      'AI content pipeline via OpenRouter',
+    ],
     methodology:
       'A prompt-engineered pipeline that structures source material into lessons, diagrams and slides.',
     technologies: ['React', 'Node.js', 'MongoDB', 'OpenRouter API'],
@@ -366,12 +383,14 @@ export const projects: Project[] = [
     status: 'Ongoing',
     overview:
       'Hands-on defensive security work on Hack The Box: investigating telemetry with Splunk and Elastic, analyzing Windows events, monitoring authentication and hunting suspicious process activity.',
-    problem:
-      'Building real detection and investigation skills requires practice against realistic telemetry, not just theory.',
-    architecture:
-      'Hack The Box lab environments using Splunk and Elastic over Windows event and Sysmon data.',
-    contribution:
-      'Completed investigations across authentication, process execution and threat-hunting scenarios.',
+    purpose:
+      'Build hands-on detection and investigation skills against realistic telemetry.',
+    features: [
+      'Splunk & Elastic log analysis',
+      'Windows event & authentication monitoring',
+      'Suspicious process investigations',
+      'MITRE ATT&CK technique mapping',
+    ],
     methodology:
       'Analyst workflow: query telemetry, pivot on indicators, and map observed activity to MITRE ATT&CK.',
     technologies: ['Splunk', 'Elastic', 'Windows Logs', 'Sysmon', 'MITRE ATT&CK'],
@@ -379,73 +398,210 @@ export const projects: Project[] = [
   },
 ];
 
-export const projectCategories: ('All' | ProjectCategory)[] = [
-  'All',
-  'Offensive Security',
-  'Defensive Security',
-  'Purple Teaming',
-  'Security Development',
+// Status-based filters for the Projects section.
+export const projectStatuses: ('All Projects' | ProjectStatus)[] = [
+  'All Projects',
+  'Completed',
+  'In Development',
+  'Ongoing',
+  'Concept',
 ];
 
 /* -------------------------------------------------------------------------- */
 /* Hands-on labs                                                              */
 /* -------------------------------------------------------------------------- */
 
-export type LabStatus = 'Completed' | 'Studying';
+export type LabCategory = 'Offensive Security' | 'Defensive Security' | 'Purple Team';
+export type LabStatus = 'Completed' | 'In Progress';
 
-export interface LabItem {
+export interface Lab {
   title: string;
+  category: LabCategory;
+  // Platform these were practiced on. CONFIRM / CORRECT these values.
+  platform: string;
   status: LabStatus;
-}
-
-export interface LabGroup {
-  category: string;
-  blurb: string;
+  tools: string[];
+  objective: string;
+  outcomes: string[];
   icon: LucideIcon;
-  accent: 'red' | 'cyan' | 'purple';
-  labs: LabItem[];
+  // Optional external write-up / proof link (e.g. a blog or HTB profile).
+  detailsUrl?: string;
+  // Real screenshot path when available; otherwise a branded cover is shown.
+  image?: string;
 }
 
-export const labGroups: LabGroup[] = [
+export const labCategories: ('All' | LabCategory)[] = [
+  'All',
+  'Offensive Security',
+  'Defensive Security',
+  'Purple Team',
+];
+
+export const labs: Lab[] = [
+  /* ---- Offensive Security (completed) ---- */
   {
-    category: 'Offensive Security Labs',
-    blurb: 'Authorized testing of applications, APIs and networks.',
+    title: 'Web Application Penetration Testing',
+    category: 'Offensive Security',
+    platform: 'TryHackMe',
+    status: 'Completed',
+    tools: ['Burp Suite', 'OWASP ZAP'],
+    objective: 'Test web applications for common vulnerabilities under authorization.',
+    outcomes: ['Mapped and tested input-validation and auth flaws', 'Practised a manual testing workflow'],
+    icon: Globe,
+  },
+  {
+    title: 'Network Reconnaissance',
+    category: 'Offensive Security',
+    platform: 'TryHackMe',
+    status: 'Completed',
+    tools: ['Nmap', 'Wireshark'],
+    objective: 'Enumerate hosts, ports and services to map an attack surface.',
+    outcomes: ['Service and version enumeration', 'Basic traffic analysis'],
+    icon: Radar,
+  },
+  {
+    title: 'Vulnerability Assessment',
+    category: 'Offensive Security',
+    platform: 'TryHackMe',
+    status: 'Completed',
+    tools: ['Nmap', 'Burp Suite'],
+    objective: 'Identify, validate and rate the severity of vulnerabilities.',
+    outcomes: ['Separated real findings from false positives', 'Applied CVSS-based severity'],
+    icon: ScanSearch,
+  },
+  {
+    title: 'Authentication & API Security Testing',
+    category: 'Offensive Security',
+    platform: 'TryHackMe',
+    status: 'Completed',
+    tools: ['Burp Suite', 'Postman'],
+    objective: 'Test authentication flows and API endpoints for weaknesses.',
+    outcomes: ['JWT and session analysis', 'Broken access-control checks'],
+    icon: KeyRound,
+  },
+  {
+    title: 'OWASP Top 10 Practical Labs',
+    category: 'Offensive Security',
+    platform: 'TryHackMe',
+    status: 'Completed',
+    tools: ['Burp Suite'],
+    objective: 'Work through the OWASP Top 10 categories hands-on.',
+    outcomes: ['Practised injection, XSS and access-control issues'],
+    icon: Bug,
+  },
+
+  /* ---- Defensive Security (completed) ---- */
+  {
+    title: 'SOC Investigations',
+    category: 'Defensive Security',
+    platform: 'Hack The Box',
+    status: 'Completed',
+    tools: ['SIEM'],
+    objective: 'Triage alerts and investigate suspicious activity like a SOC analyst.',
+    outcomes: ['Alert triage workflow', 'Structured evidence gathering'],
+    icon: Siren,
+  },
+  {
+    title: 'Splunk SIEM Queries',
+    category: 'Defensive Security',
+    platform: 'Hack The Box',
+    status: 'Completed',
+    tools: ['Splunk'],
+    objective: 'Search and correlate security events with SPL.',
+    outcomes: ['SPL querying', 'Event correlation across sources'],
+    icon: Search,
+  },
+  {
+    title: 'Windows Event Log Analysis',
+    category: 'Defensive Security',
+    platform: 'Hack The Box',
+    status: 'Completed',
+    tools: ['Windows Event Logs'],
+    objective: 'Interpret Windows logs for signs of compromise.',
+    outcomes: ['Logon and authentication event analysis'],
+    icon: FileSearch,
+  },
+  {
+    title: 'Sysmon Investigations',
+    category: 'Defensive Security',
+    platform: 'Hack The Box',
+    status: 'Completed',
+    tools: ['Sysmon'],
+    objective: 'Trace process, network and file activity using Sysmon telemetry.',
+    outcomes: ['Process-tree reconstruction', 'Indicator pivoting'],
+    icon: Activity,
+  },
+  {
+    title: 'Threat Hunting with Elastic',
+    category: 'Defensive Security',
+    platform: 'Hack The Box',
+    status: 'Completed',
+    tools: ['Elastic'],
+    objective: 'Hunt for malicious activity using Elastic queries and dashboards.',
+    outcomes: ['Hypothesis-driven hunting'],
+    icon: Crosshair,
+  },
+  {
+    title: 'Suspicious Process & Network Activity Analysis',
+    category: 'Defensive Security',
+    platform: 'Hack The Box',
+    status: 'Completed',
+    tools: ['Sysmon', 'Wireshark'],
+    objective: 'Investigate anomalous process execution and network behaviour.',
+    outcomes: ['Correlated process and network indicators'],
+    icon: ShieldAlert,
+  },
+
+  /* ---- Purple Team / Security Validation (in progress) ---- */
+  {
+    title: 'MITRE ATT&CK Mapping',
+    category: 'Purple Team',
+    platform: 'Self-study',
+    status: 'In Progress',
+    tools: ['MITRE ATT&CK'],
+    objective: 'Map observed techniques to ATT&CK tactics and techniques.',
+    outcomes: ['Building technique-identification fluency'],
+    icon: Target,
+  },
+  {
+    title: 'Attack Simulation & Detection Validation',
+    category: 'Purple Team',
+    platform: 'Self-study',
+    status: 'In Progress',
+    tools: ['MITRE ATT&CK'],
+    objective: 'Simulate techniques and confirm that detections fire.',
+    outcomes: ['Learning to validate detection coverage'],
     icon: Swords,
-    accent: 'red',
-    labs: [
-      { title: 'Web Application Testing', status: 'Completed' },
-      { title: 'API Security Testing', status: 'Completed' },
-      { title: 'Network Reconnaissance', status: 'Completed' },
-      { title: 'Vulnerability Assessment', status: 'Completed' },
-      { title: 'Authentication Testing', status: 'Completed' },
-    ],
   },
   {
-    category: 'Defensive Security Labs',
-    blurb: 'Investigating telemetry and hunting for malicious activity.',
+    title: 'Detection Gap Analysis',
+    category: 'Purple Team',
+    platform: 'Self-study',
+    status: 'In Progress',
+    tools: ['MITRE ATT&CK'],
+    objective: 'Find where detections are missing across the ATT&CK matrix.',
+    outcomes: ['Identifying coverage gaps'],
+    icon: Workflow,
+  },
+  {
+    title: 'Security Control Validation',
+    category: 'Purple Team',
+    platform: 'Self-study',
+    status: 'In Progress',
+    tools: ['MITRE ATT&CK'],
+    objective: 'Validate that controls detect or prevent known techniques.',
+    outcomes: ['Testing control effectiveness'],
     icon: ShieldCheck,
-    accent: 'cyan',
-    labs: [
-      { title: 'Splunk Investigations', status: 'Completed' },
-      { title: 'Windows Event Analysis', status: 'Completed' },
-      { title: 'Sysmon Investigations', status: 'Completed' },
-      { title: 'Kerberos Authentication Analysis', status: 'Completed' },
-      { title: 'Threat Hunting with Elastic', status: 'Completed' },
-      { title: 'Suspicious Process Investigations', status: 'Completed' },
-    ],
   },
   {
-    category: 'Purple Team Exercises',
-    blurb: 'Currently studying — connecting attack techniques to detection.',
+    title: 'Red Team & Blue Team Investigation Workflows',
+    category: 'Purple Team',
+    platform: 'Self-study',
+    status: 'In Progress',
+    tools: ['MITRE ATT&CK'],
+    objective: 'Connect offensive actions to the defensive investigation steps they trigger.',
+    outcomes: ['Bridging offensive and defensive workflows'],
     icon: Blend,
-    accent: 'purple',
-    labs: [
-      { title: 'Attack Technique Mapping', status: 'Studying' },
-      { title: 'Detection Validation', status: 'Studying' },
-      { title: 'Adversary Simulation', status: 'Studying' },
-      { title: 'Detection Coverage Analysis', status: 'Studying' },
-      { title: 'Security Control Improvement', status: 'Studying' },
-    ],
   },
 ];
 

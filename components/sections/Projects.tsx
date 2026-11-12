@@ -1,63 +1,83 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Github, ExternalLink, FolderGit2, FlaskConical, Blend } from 'lucide-react';
+import { Github, ExternalLink, FolderGit2, FlaskConical, Check, Lock } from 'lucide-react';
 import { Section, SectionHeading } from '@/components/ui/Section';
-import { projects, projectCategories, type Project, type ProjectStatus } from '@/lib/data';
+import {
+  projects,
+  projectStatuses,
+  type Project,
+  type ProjectStatus,
+  type ProjectCategory,
+} from '@/lib/data';
 import { cn } from '@/lib/utils';
 
 const statusStyles: Record<ProjectStatus, string> = {
-  Completed: 'bg-emerald-400/15 text-emerald-300',
-  'In Development': 'bg-accent-cyan/15 text-accent-cyan',
-  Ongoing: 'bg-accent-blue/15 text-accent-sky',
-  Concept: 'bg-slate-400/15 text-slate-300',
+  Completed: 'bg-emerald-400/15 text-emerald-300 ring-emerald-400/30',
+  'In Development': 'bg-accent-cyan/15 text-accent-cyan ring-accent-cyan/30',
+  Ongoing: 'bg-accent-blue/15 text-accent-sky ring-accent-blue/30',
+  Concept: 'bg-slate-400/15 text-slate-300 ring-slate-400/30',
+};
+
+const categoryCover: Record<ProjectCategory, string> = {
+  'Offensive Security': 'from-rose-500/25 via-base-700/40 to-rose-500/5',
+  'Defensive Security': 'from-accent-cyan/25 via-base-700/40 to-accent-cyan/5',
+  'Purple Teaming': 'from-violet-500/25 via-base-700/40 to-violet-500/5',
+  'Security Development': 'from-accent-blue/25 via-base-700/40 to-accent-blue/5',
 };
 
 export function Projects() {
-  const [active, setActive] = useState<(typeof projectCategories)[number]>('All');
+  const [active, setActive] = useState<(typeof projectStatuses)[number]>('All Projects');
 
-  const filtered = active === 'All' ? projects : projects.filter((p) => p.category === active);
+  const filtered =
+    active === 'All Projects' ? projects : projects.filter((p) => p.status === active);
 
   return (
     <Section id="projects" className="bg-[var(--bg-soft)]/40">
       <SectionHeading
         eyebrow="Projects"
         title="Security Projects & Builds"
-        description="Personal projects and hands-on training across offensive, defensive and security-development work. Repositories and live links are shown only once they are public."
+        description="Offensive, defensive and security-development work. Filter by development status. Repository and demo links appear only when they are public."
       />
 
-      {/* Filter */}
+      {/* Status filters */}
       <div className="mb-10 flex flex-wrap justify-center gap-2">
-        {projectCategories.map((cat) => (
-          <button
-            key={cat}
-            type="button"
-            onClick={() => setActive(cat)}
-            className={cn(
-              'rounded-full border px-4 py-1.5 text-sm font-medium transition-colors',
-              active === cat
-                ? 'border-accent-cyan bg-accent-cyan/15 text-accent-cyan'
-                : 'border-[var(--border)] text-[var(--text-muted)] hover:border-accent-cyan/40 hover:text-[var(--text)]'
-            )}
-            aria-pressed={active === cat}
-          >
-            {cat}
-          </button>
-        ))}
+        {projectStatuses.map((status) => {
+          const count =
+            status === 'All Projects'
+              ? projects.length
+              : projects.filter((p) => p.status === status).length;
+          return (
+            <button
+              key={status}
+              type="button"
+              onClick={() => setActive(status)}
+              className={cn(
+                'inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-sm font-medium transition-colors',
+                active === status
+                  ? 'border-accent-cyan bg-accent-cyan/15 text-accent-cyan'
+                  : 'border-[var(--border)] text-[var(--text-muted)] hover:border-accent-cyan/40 hover:text-[var(--text)]'
+              )}
+              aria-pressed={active === status}
+            >
+              {status}
+              <span className="rounded-full bg-[var(--surface)] px-1.5 text-[11px] font-semibold">
+                {count}
+              </span>
+            </button>
+          );
+        })}
       </div>
 
-      {filtered.length === 0 ? (
-        <EmptyState />
-      ) : (
-        <motion.div layout className="grid gap-6 lg:grid-cols-2">
-          <AnimatePresence mode="popLayout">
-            {filtered.map((project) => (
-              <ProjectCard key={project.title} project={project} />
-            ))}
-          </AnimatePresence>
-        </motion.div>
-      )}
+      <motion.div layout className="grid gap-6 md:grid-cols-2">
+        <AnimatePresence mode="popLayout">
+          {filtered.map((project) => (
+            <ProjectCard key={project.title} project={project} />
+          ))}
+        </AnimatePresence>
+      </motion.div>
     </Section>
   );
 }
@@ -66,13 +86,6 @@ function ProjectCard({ project }: { project: Project }) {
   const Icon = project.icon;
   const isLab = project.type === 'Training / Labs';
 
-  const details: { label: string; value: string }[] = [
-    { label: 'Problem', value: project.problem },
-    { label: 'Architecture', value: project.architecture },
-    { label: 'My Contribution', value: project.contribution },
-    { label: 'Methodology', value: project.methodology },
-  ];
-
   return (
     <motion.article
       layout
@@ -80,51 +93,77 @@ function ProjectCard({ project }: { project: Project }) {
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.96 }}
       transition={{ duration: 0.3 }}
-      className="glass card-hover flex flex-col overflow-hidden rounded-xl"
+      className="group glass card-hover flex flex-col overflow-hidden rounded-xl"
     >
-      {/* Preview banner (placeholder until real screenshots are added) */}
-      <div className="relative flex h-28 items-center justify-center overflow-hidden border-b border-[var(--border)] bg-gradient-to-br from-accent-cyan/10 via-base-700/40 to-accent-blue/10">
-        <div
-          className="absolute inset-0 bg-grid-cyber [background-size:28px_28px] opacity-40"
-          aria-hidden
-        />
-        <Icon className="relative h-9 w-9 text-accent-cyan" />
+      {/* Cover */}
+      <div className="relative h-40 overflow-hidden border-b border-[var(--border)]">
+        {project.image ? (
+          <Image
+            src={project.image}
+            alt={`${project.title} preview`}
+            fill
+            sizes="(max-width: 768px) 100vw, 400px"
+            className="object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+        ) : (
+          <div
+            className={cn(
+              'flex h-full items-center justify-center bg-gradient-to-br transition-transform duration-500 group-hover:scale-105',
+              categoryCover[project.category]
+            )}
+          >
+            <div
+              className="absolute inset-0 bg-grid-cyber [background-size:26px_26px] opacity-40"
+              aria-hidden
+            />
+            <Icon className="relative h-10 w-10 text-accent-cyan" />
+          </div>
+        )}
+
+        {/* Status badge (top of card) */}
         <span
           className={cn(
-            'absolute right-3 top-3 inline-flex items-center rounded-full px-2.5 py-1 text-[11px] font-semibold',
+            'absolute right-3 top-3 inline-flex items-center rounded-full px-2.5 py-1 text-[11px] font-semibold ring-1 backdrop-blur-sm',
             statusStyles[project.status]
           )}
         >
           {project.status}
         </span>
+        <span
+          className={cn(
+            'absolute left-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-base-900/70 px-2.5 py-1 text-[11px] font-semibold backdrop-blur-sm',
+            isLab ? 'text-accent-sky' : 'text-accent-cyan'
+          )}
+        >
+          {isLab ? <FlaskConical className="h-3 w-3" /> : <FolderGit2 className="h-3 w-3" />}
+          {project.category}
+        </span>
       </div>
 
       <div className="flex flex-1 flex-col p-6">
-        <div className="mb-1 flex items-center gap-2">
-          <span
-            className={cn(
-              'inline-flex items-center gap-1.5 rounded-full px-2 py-0.5 text-[11px] font-semibold',
-              isLab ? 'bg-accent-blue/15 text-accent-sky' : 'bg-accent-cyan/15 text-accent-cyan'
-            )}
-          >
-            {isLab ? <FlaskConical className="h-3 w-3" /> : <FolderGit2 className="h-3 w-3" />}
-            {project.category}
-          </span>
-        </div>
-
         <h3 className="text-lg font-semibold">{project.title}</h3>
         <p className="mt-2 text-sm leading-relaxed text-[var(--text-muted)]">{project.overview}</p>
 
-        <dl className="mt-4 space-y-2.5 border-t border-[var(--border)] pt-4">
-          {details.map(({ label, value }) => (
-            <div key={label}>
-              <dt className="font-mono text-[10px] font-semibold uppercase tracking-[0.14em] text-accent-cyan">
-                {label}
-              </dt>
-              <dd className="mt-0.5 text-sm leading-relaxed text-[var(--text)]">{value}</dd>
-            </div>
-          ))}
-        </dl>
+        <p className="mt-3 flex items-start gap-2 text-sm leading-relaxed">
+          <span className="font-mono text-[10px] font-semibold uppercase tracking-[0.14em] text-accent-cyan">
+            Purpose
+          </span>
+          <span className="text-[var(--text)]">{project.purpose}</span>
+        </p>
+
+        <div className="mt-4">
+          <p className="mb-2 font-mono text-[10px] font-semibold uppercase tracking-[0.14em] text-accent-cyan">
+            Key Features
+          </p>
+          <ul className="space-y-1.5">
+            {project.features.map((f) => (
+              <li key={f} className="flex items-start gap-2 text-sm text-[var(--text)]">
+                <Check className="mt-0.5 h-3.5 w-3.5 flex-shrink-0 text-accent-cyan" />
+                {f}
+              </li>
+            ))}
+          </ul>
+        </div>
 
         <div className="mt-4 flex flex-wrap gap-1.5">
           {project.technologies.map((tech) => (
@@ -137,19 +176,23 @@ function ProjectCard({ project }: { project: Project }) {
           ))}
         </div>
 
-        <div className="mt-5 flex items-center gap-4 border-t border-[var(--border)] pt-4">
+        {/* Actions */}
+        <div className="mt-5 flex items-center gap-3 border-t border-[var(--border)] pt-4">
           {project.repoUrl ? (
             <a
               href={project.repoUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 text-xs font-medium text-[var(--text-muted)] hover:text-accent-cyan"
+              className="inline-flex items-center gap-1.5 rounded-lg border border-[var(--border-strong)] px-3 py-1.5 text-xs font-semibold text-[var(--text)] transition-colors hover:border-accent-cyan/50 hover:text-accent-cyan"
             >
-              <Github className="h-4 w-4" /> Code
+              <Github className="h-4 w-4" /> View Repository
             </a>
           ) : (
-            <span className="inline-flex items-center gap-1.5 font-mono text-[11px] text-[var(--text-muted)]/70">
-              <Github className="h-4 w-4" /> Private / in progress
+            <span
+              className="inline-flex items-center gap-1.5 rounded-lg border border-[var(--border)] px-3 py-1.5 font-mono text-[11px] text-[var(--text-muted)]/70"
+              title="Repository link not yet provided"
+            >
+              <Lock className="h-3.5 w-3.5" /> Repo link not yet added
             </span>
           )}
           {project.liveUrl && (
@@ -157,32 +200,13 @@ function ProjectCard({ project }: { project: Project }) {
               href={project.liveUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 text-xs font-medium text-[var(--text-muted)] hover:text-accent-cyan"
+              className="inline-flex items-center gap-1.5 text-xs font-semibold text-accent-cyan hover:underline"
             >
-              <ExternalLink className="h-4 w-4" /> Live
+              <ExternalLink className="h-4 w-4" /> Live Demo
             </a>
           )}
         </div>
       </div>
     </motion.article>
-  );
-}
-
-function EmptyState() {
-  return (
-    <div className="glass mx-auto max-w-lg rounded-xl p-8 text-center">
-      <span className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-xl border border-accent-cyan/25 bg-accent-cyan/10">
-        <Blend className="h-6 w-6 text-accent-cyan" />
-      </span>
-      <h3 className="font-semibold">Purple Team projects in progress</h3>
-      <p className="mt-2 text-sm leading-relaxed text-[var(--text-muted)]">
-        I&apos;m currently building hands-on Purple Team exercises — mapping attack techniques to
-        detections and validating security controls. See the{' '}
-        <a href="#labs" className="text-accent-cyan hover:underline">
-          Labs
-        </a>{' '}
-        section for the exercises I&apos;m working through now.
-      </p>
-    </div>
   );
 }

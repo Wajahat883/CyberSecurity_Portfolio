@@ -1,15 +1,23 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { motion } from 'framer-motion';
 import { Menu, X, Shield, Sun, Moon } from 'lucide-react';
 import { navLinks, profile } from '@/lib/data';
 import { useTheme } from '@/components/providers/ThemeProvider';
+import { useScrollSpy } from '@/components/hooks/useScrollSpy';
 import { cn } from '@/lib/utils';
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [clickedId, setClickedId] = useState<string | null>(null);
   const { theme, toggleTheme } = useTheme();
+
+  const sectionIds = useMemo(() => navLinks.map((l) => l.href.replace('#', '')), []);
+  const spyId = useScrollSpy(sectionIds, 80);
+  // Prefer an optimistic click target briefly, then defer to the scroll-spy.
+  const activeId = clickedId ?? spyId;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 16);
@@ -17,6 +25,11 @@ export function Navbar() {
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
+
+  // Clear the optimistic click lock once the spy catches up to it.
+  useEffect(() => {
+    if (clickedId && spyId === clickedId) setClickedId(null);
+  }, [spyId, clickedId]);
 
   // Lock body scroll when the mobile menu is open.
   useEffect(() => {
@@ -26,6 +39,11 @@ export function Navbar() {
     };
   }, [menuOpen]);
 
+  const handleNavClick = (href: string) => {
+    setClickedId(href.replace('#', ''));
+    setMenuOpen(false);
+  };
+
   return (
     <header
       className={cn(
@@ -34,7 +52,7 @@ export function Navbar() {
       )}
     >
       <nav className="container-page flex h-16 items-center justify-between" aria-label="Primary">
-        <a href="#" className="flex items-center gap-2 font-semibold tracking-tight">
+        <a href="#home" className="flex items-center gap-2 font-semibold tracking-tight">
           <span className="flex h-8 w-8 items-center justify-center rounded-lg border border-accent-cyan/30 bg-accent-cyan/10">
             <Shield className="h-4 w-4 text-accent-cyan" />
           </span>
@@ -45,17 +63,33 @@ export function Navbar() {
         </a>
 
         {/* Desktop links */}
-        <ul className="hidden items-center gap-1 md:flex">
-          {navLinks.map((link) => (
-            <li key={link.href}>
-              <a
-                href={link.href}
-                className="rounded-md px-3 py-2 text-sm font-medium text-[var(--text-muted)] transition-colors hover:text-[var(--text)]"
-              >
-                {link.label}
-              </a>
-            </li>
-          ))}
+        <ul className="hidden items-center gap-0.5 md:flex">
+          {navLinks.map((link) => {
+            const id = link.href.replace('#', '');
+            const isActive = activeId === id;
+            return (
+              <li key={link.href}>
+                <a
+                  href={link.href}
+                  onClick={() => handleNavClick(link.href)}
+                  aria-current={isActive ? 'true' : undefined}
+                  className={cn(
+                    'relative rounded-md px-3 py-2 text-sm font-medium transition-colors',
+                    isActive ? 'text-accent-cyan' : 'text-[var(--text-muted)] hover:text-[var(--text)]'
+                  )}
+                >
+                  {isActive && (
+                    <motion.span
+                      layoutId="nav-active"
+                      className="absolute inset-0 -z-10 rounded-md bg-accent-cyan/10 ring-1 ring-accent-cyan/30"
+                      transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                    />
+                  )}
+                  {link.label}
+                </a>
+              </li>
+            );
+          })}
         </ul>
 
         <div className="flex items-center gap-2">
@@ -70,6 +104,7 @@ export function Navbar() {
 
           <a
             href="#contact"
+            onClick={() => handleNavClick('#contact')}
             className="hidden rounded-lg bg-accent-cyan px-4 py-2 text-sm font-semibold text-base-900 transition-transform hover:scale-[1.03] md:inline-flex"
           >
             Get in touch
@@ -91,17 +126,33 @@ export function Navbar() {
       {menuOpen && (
         <div className="glass border-t border-[var(--border)] md:hidden">
           <ul className="container-page flex flex-col gap-1 py-4">
-            {navLinks.map((link) => (
-              <li key={link.href}>
-                <a
-                  href={link.href}
-                  onClick={() => setMenuOpen(false)}
-                  className="block rounded-md px-3 py-3 text-base font-medium text-[var(--text-muted)] transition-colors hover:bg-accent-cyan/10 hover:text-[var(--text)]"
-                >
-                  {link.label}
-                </a>
-              </li>
-            ))}
+            {navLinks.map((link) => {
+              const id = link.href.replace('#', '');
+              const isActive = activeId === id;
+              return (
+                <li key={link.href}>
+                  <a
+                    href={link.href}
+                    onClick={() => handleNavClick(link.href)}
+                    aria-current={isActive ? 'true' : undefined}
+                    className={cn(
+                      'flex items-center gap-2 rounded-md px-3 py-3 text-base font-medium transition-colors',
+                      isActive
+                        ? 'bg-accent-cyan/10 text-accent-cyan ring-1 ring-accent-cyan/30'
+                        : 'text-[var(--text-muted)] hover:bg-accent-cyan/5 hover:text-[var(--text)]'
+                    )}
+                  >
+                    <span
+                      className={cn(
+                        'h-1.5 w-1.5 rounded-full transition-colors',
+                        isActive ? 'bg-accent-cyan' : 'bg-[var(--border-strong)]'
+                      )}
+                    />
+                    {link.label}
+                  </a>
+                </li>
+              );
+            })}
             <li className="mt-2">
               <a
                 href={profile.resumePath}
