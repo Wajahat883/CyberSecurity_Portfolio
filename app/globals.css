@@ -11,16 +11,17 @@
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
 }
 
-/* Dark (default) */
+/* Dark (default) — premium graphite */
 .dark {
-  --bg: #05070d;
-  --bg-soft: #0a0e1c;
-  --surface: rgba(15, 21, 38, 0.6);
-  --surface-solid: #0f1526;
-  --border: rgba(56, 189, 248, 0.12);
-  --border-strong: rgba(56, 189, 248, 0.28);
-  --text: #e6edf6;
-  --text-muted: #8a99b3;
+  --bg: #08090c;
+  --bg-soft: #0c0e12;
+  --surface: rgba(255, 255, 255, 0.025);
+  --surface-raised: rgba(255, 255, 255, 0.045);
+  --surface-solid: #111318;
+  --border: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.16);
+  --text: #f4f6f9;
+  --text-muted: #9aa3b2;
   --accent: #22d3ee;
   color-scheme: dark;
 }
@@ -30,9 +31,10 @@
   --bg: #f6f8fc;
   --bg-soft: #eef2f9;
   --surface: rgba(255, 255, 255, 0.75);
+  --surface-raised: rgba(255, 255, 255, 0.95);
   --surface-solid: #ffffff;
   --border: rgba(15, 23, 42, 0.1);
-  --border-strong: rgba(14, 116, 144, 0.3);
+  --border-strong: rgba(15, 23, 42, 0.2);
   --text: #0f1b2d;
   --text-muted: #51607a;
   --accent: #0e7490;
@@ -59,6 +61,11 @@
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
+  }
+
+  h1, h2, h3, .font-display {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
   }
 
   ::selection {
@@ -109,14 +116,43 @@
     border: 1px solid var(--border);
   }
 
+  /* Premium raised panel — subtle, not glowy */
+  .panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.03) inset,
+      0 24px 60px -32px rgba(0, 0, 0, 0.85);
+  }
+
   .card-hover {
-    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+    transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.3s ease,
+      background-color 0.3s ease;
   }
 
   .card-hover:hover {
-    transform: translateY(-4px);
+    transform: translateY(-3px);
     border-color: var(--border-strong);
-    box-shadow: 0 12px 40px -16px rgba(34, 211, 238, 0.4);
+    background: var(--surface-raised);
+  }
+
+  /* Hairline section divider with a centered accent fade */
+  .section-divider {
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      var(--border-strong) 20%,
+      var(--border-strong) 80%,
+      transparent
+    );
+  }
+
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--accent);
   }
 }
 

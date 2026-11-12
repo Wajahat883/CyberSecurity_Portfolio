@@ -6,38 +6,27 @@ import { profile } from '@/lib/data';
 import { cn } from '@/lib/utils';
 
 interface ProfileImageProps {
-  /** Rendered box size in px (square). */
-  size: number;
+  /** Sizing/shape classes for the box (e.g. "h-16 w-16 rounded-xl" or "aspect-[4/5] w-full rounded-2xl"). */
+  className?: string;
   /** Responsive `sizes` hint for next/image. */
   sizes?: string;
   priority?: boolean;
-  className?: string;
-  rounded?: 'full' | '2xl';
+  /** Font size for the fallback initials. */
+  fallbackText?: string;
 }
 
 /**
- * Optimized profile photo with a graceful fallback to initials if the image
- * is missing or fails to load. Uses next/image for responsive optimization.
+ * Optimized profile photo that fills its container (set shape/size via
+ * className). Falls back to initials if the image is missing or fails to load.
  */
-export function ProfileImage({
-  size,
-  sizes,
-  priority = false,
-  className,
-  rounded = '2xl',
-}: ProfileImageProps) {
+export function ProfileImage({ className, sizes, priority = false, fallbackText = '1.5rem' }: ProfileImageProps) {
   const [failed, setFailed] = useState(false);
-  const radius = rounded === 'full' ? 'rounded-full' : 'rounded-2xl';
 
   if (failed) {
     return (
       <div
-        className={cn(
-          'flex items-center justify-center bg-base-700 font-mono font-bold text-accent-cyan',
-          radius,
-          className
-        )}
-        style={{ width: size, height: size, fontSize: size * 0.32 }}
+        className={cn('flex items-center justify-center bg-base-700 font-display font-bold text-accent-cyan', className)}
+        style={{ fontSize: fallbackText }}
         aria-label={profile.name}
       >
         MW
@@ -46,16 +35,16 @@ export function ProfileImage({
   }
 
   return (
-    <Image
-      src={profile.photo}
-      alt={`${profile.name} — ${profile.officialTitle}`}
-      width={size}
-      height={size}
-      sizes={sizes}
-      priority={priority}
-      onError={() => setFailed(true)}
-      className={cn('object-cover', radius, className)}
-      style={{ width: size, height: size }}
-    />
+    <div className={cn('relative overflow-hidden', className)}>
+      <Image
+        src={profile.photo}
+        alt={`${profile.name} — ${profile.officialTitle}`}
+        fill
+        sizes={sizes}
+        priority={priority}
+        onError={() => setFailed(true)}
+        className="object-cover"
+      />
+    </div>
   );
 }

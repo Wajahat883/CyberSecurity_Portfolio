@@ -19,13 +19,13 @@ export function About() {
         </Reveal>
 
         <Reveal delayIndex={1}>
-          <div className="glass rounded-xl p-6">
-            <div className="mb-5 flex items-center gap-4">
-              <div className="rounded-xl bg-gradient-to-br from-accent-cyan/50 to-accent-blue/30 p-[2px]">
-                <div className="overflow-hidden rounded-[0.65rem] bg-base-800">
-                  <ProfileImage size={64} sizes="64px" rounded="2xl" className="!h-16 !w-16" />
-                </div>
-              </div>
+          <div className="panel rounded-2xl p-6">
+            <div className="mb-6 flex items-center gap-4">
+              <ProfileImage
+                className="h-16 w-16 rounded-xl border border-[var(--border-strong)]"
+                sizes="64px"
+                fallbackText="1.2rem"
+              />
               <div>
                 <p className="font-semibold">{profile.name}</p>
                 <p className="font-mono text-xs text-accent-cyan">{profile.officialTitle}</p>
@@ -33,9 +33,7 @@ export function About() {
               </div>
             </div>
 
-            <h3 className="mb-4 font-mono text-xs font-semibold uppercase tracking-[0.18em] text-accent-cyan">
-              Focus Areas
-            </h3>
+            <h3 className="mb-4 eyebrow">Focus Areas</h3>
             <ul className="space-y-3">
               {about.focusAreas.map((area) => (
                 <li key={area} className="flex items-start gap-3 text-sm">

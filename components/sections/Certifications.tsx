@@ -20,7 +20,7 @@ export function Certifications() {
             <Reveal key={cert.title} delayIndex={i} as="article">
               <div
                 className={cn(
-                  'glass card-hover relative flex h-full flex-col rounded-xl p-6',
+                  'panel card-hover relative flex h-full flex-col rounded-xl p-6',
                   inProgress && 'border-accent-cyan/30'
                 )}
               >
@@ -94,7 +94,7 @@ export function Certifications() {
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {awards.map((award, i) => (
               <Reveal key={award.title} delayIndex={i} as="article">
-                <div className="glass card-hover flex h-full items-start gap-3 rounded-xl p-5">
+                <div className="panel card-hover flex h-full items-start gap-3 rounded-xl p-5">
                   <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg border border-amber-400/30 bg-amber-400/10">
                     <Trophy className="h-5 w-5 text-amber-300" />
                   </span>

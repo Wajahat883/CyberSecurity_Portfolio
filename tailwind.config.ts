@@ -28,11 +28,14 @@ const config: Config = {
       },
       fontFamily: {
         sans: ['var(--font-sans)', 'system-ui', 'sans-serif'],
+        display: ['var(--font-display)', 'var(--font-sans)', 'system-ui', 'sans-serif'],
         mono: ['var(--font-mono)', 'ui-monospace', 'monospace'],
       },
       boxShadow: {
-        glow: '0 0 0 1px rgba(34, 211, 238, 0.15), 0 8px 40px -12px rgba(34, 211, 238, 0.25)',
-        'glow-strong': '0 0 40px -8px rgba(34, 211, 238, 0.45)',
+        // Restrained, premium depth — not neon glow.
+        soft: '0 1px 0 0 rgba(255,255,255,0.03) inset, 0 20px 50px -24px rgba(0,0,0,0.8)',
+        glow: '0 0 0 1px rgba(34, 211, 238, 0.12), 0 10px 40px -16px rgba(34, 211, 238, 0.18)',
+        'glow-strong': '0 0 40px -10px rgba(34, 211, 238, 0.35)',
       },
       backgroundImage: {
         'grid-cyber':

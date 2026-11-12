@@ -15,9 +15,16 @@ const levelDots: Record<SkillLevel, number> = {
   Comfortable: 3,
 };
 
+const catAccent: Record<string, { badge: string; icon: string }> = {
+  'Offensive Security': { badge: 'border-rose-400/25 bg-rose-400/10', icon: 'text-rose-300' },
+  'Defensive Security': { badge: 'border-accent-cyan/25 bg-accent-cyan/10', icon: 'text-accent-cyan' },
+  'Purple Team Operations': { badge: 'border-violet-400/25 bg-violet-400/10', icon: 'text-violet-300' },
+  'Networking & Systems': { badge: 'border-accent-blue/25 bg-accent-blue/10', icon: 'text-accent-sky' },
+};
+
 export function Skills() {
   return (
-    <Section id="skills" className="bg-[var(--bg-soft)]/40">
+    <Section id="skills" divider className="bg-[var(--bg-soft)]/40">
       <SectionHeading
         eyebrow="Technical Skills"
         title="Offensive, Defensive & Purple Team"
@@ -27,12 +34,13 @@ export function Skills() {
       <div className="grid gap-5 md:grid-cols-2">
         {skillCategories.map((category, i) => {
           const Icon = category.icon;
+          const accent = catAccent[category.title] ?? { badge: 'border-accent-cyan/25 bg-accent-cyan/10', icon: 'text-accent-cyan' };
           return (
             <Reveal key={category.title} delayIndex={i} as="article">
-              <div className="glass card-hover h-full rounded-xl p-6">
-                <div className="mb-4 flex items-start gap-3">
-                  <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg border border-accent-cyan/25 bg-accent-cyan/10">
-                    <Icon className="h-5 w-5 text-accent-cyan" />
+              <div className="panel card-hover h-full rounded-2xl p-6">
+                <div className="mb-5 flex items-start gap-3">
+                  <span className={cn('flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg border', accent.badge)}>
+                    <Icon className={cn('h-5 w-5', accent.icon)} />
                   </span>
                   <div>
                     <h3 className="font-semibold">{category.title}</h3>

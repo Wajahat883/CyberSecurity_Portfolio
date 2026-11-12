@@ -43,6 +43,9 @@ export const profile = {
   name: 'Muhammad Wajahat',
   // Public-facing positioning (offensive + defensive + purple team).
   title: 'Cybersecurity Penetration Tester | Offensive & Defensive Security | Purple Teaming',
+  // Two-line hero headline.
+  headline: 'Cybersecurity Penetration Tester',
+  subheadline: 'Offensive & Defensive Security · Purple Teaming',
   // Official employment title.
   officialTitle: 'Cybersecurity Penetration Tester',
   location: 'Pakistan',
@@ -318,6 +321,8 @@ export interface Project {
   imageFit?: 'cover' | 'contain';
   // true when `image` is a conceptual illustration rather than a real screenshot.
   imageIsConcept?: boolean;
+  // Featured projects render large in the showcase.
+  featured?: boolean;
 }
 
 export const projects: Project[] = [
@@ -343,6 +348,7 @@ export const projects: Project[] = [
     repoUrl: 'https://github.com/Wajahat883/Bug-Finder',
     image: '/images/projects/bug-finder.png',
     imageFit: 'contain',
+    featured: true,
   },
   {
     title: 'Tasklytics — Web App Security Assessment',
@@ -363,9 +369,10 @@ export const projects: Project[] = [
       'Manual testing with Burp Suite against the OWASP Top 10, focused on authentication, session management and access control.',
     technologies: ['Next.js', 'API Routes', 'MongoDB', 'JWT', 'Burp Suite'],
     icon: ShieldCheck,
-    image: '/images/projects/tasklytics.svg',
+    image: '/images/projects/tasklytics.png',
     imageFit: 'cover',
-    imageIsConcept: true,
+    liveUrl: 'https://staging.tasklytics.ai/',
+    featured: true,
   },
   {
     title: 'CyberLearn AI',

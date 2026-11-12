@@ -90,7 +90,7 @@ export function Contact() {
         <Reveal className="space-y-4">
           {contactItems.map(({ icon: Icon, label, value, href }) => {
             const inner = (
-              <div className="glass card-hover flex items-center gap-4 rounded-xl p-4">
+              <div className="panel card-hover flex items-center gap-4 rounded-xl p-4">
                 <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg border border-accent-cyan/25 bg-accent-cyan/10">
                   <Icon className="h-5 w-5 text-accent-cyan" />
                 </span>
@@ -132,7 +132,7 @@ export function Contact() {
 
         {/* Form */}
         <Reveal delayIndex={1}>
-          <form onSubmit={handleSubmit} noValidate className="glass rounded-xl p-6 sm:p-8">
+          <form onSubmit={handleSubmit} noValidate className="panel rounded-2xl p-6 sm:p-8">
             <div className="grid gap-5 sm:grid-cols-2">
               <Field
                 id="name"

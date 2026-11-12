@@ -48,7 +48,7 @@ export function Navbar() {
     <header
       className={cn(
         'fixed inset-x-0 top-0 z-50 transition-all duration-300',
-        scrolled ? 'glass shadow-sm' : 'bg-transparent'
+        scrolled ? 'border-b border-[var(--border)] bg-[var(--bg)]/85 backdrop-blur-xl' : 'bg-transparent'
       )}
     >
       <nav className="container-page flex h-16 items-center justify-between" aria-label="Primary">
@@ -124,7 +124,7 @@ export function Navbar() {
 
       {/* Mobile menu */}
       {menuOpen && (
-        <div className="glass border-t border-[var(--border)] md:hidden">
+        <div className="border-t border-[var(--border)] bg-[var(--bg)]/95 backdrop-blur-xl md:hidden">
           <ul className="container-page flex flex-col gap-1 py-4">
             {navLinks.map((link) => {
               const id = link.href.replace('#', '');
