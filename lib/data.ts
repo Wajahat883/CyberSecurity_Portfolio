@@ -49,9 +49,8 @@ export const profile = {
   // Official employment title.
   officialTitle: 'Cybersecurity Penetration Tester',
   location: 'Pakistan',
-  // Email intentionally withheld until a real professional inbox is provided.
-  // Leave as null to hide email everywhere; set a string to show it again.
-  email: null as string | null,
+  // Public contact inbox (also the default destination for the contact form).
+  email: 'waji21569870@gmail.com' as string | null,
   github: 'https://github.com/Wajahat883',
   githubHandle: 'Wajahat883',
   linkedin: 'https://linkedin.com/in/muhammad-wajahat-8292092b7/',

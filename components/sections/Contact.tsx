@@ -12,13 +12,16 @@ type Status = 'idle' | 'submitting' | 'success' | 'error';
 interface FieldErrors {
   name?: string;
   email?: string;
+  subject?: string;
   message?: string;
 }
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+const EMPTY = { name: '', email: '', subject: '', message: '', company: '' };
+
 export function Contact() {
-  const [values, setValues] = useState({ name: '', email: '', message: '' });
+  const [values, setValues] = useState(EMPTY);
   const [errors, setErrors] = useState<FieldErrors>({});
   const [status, setStatus] = useState<Status>('idle');
   const [serverMessage, setServerMessage] = useState('');
@@ -27,6 +30,7 @@ export function Contact() {
     const next: FieldErrors = {};
     if (values.name.trim().length < 2) next.name = 'Please enter your name.';
     if (!emailRegex.test(values.email.trim())) next.email = 'Please enter a valid email address.';
+    if (values.subject.trim().length < 2) next.subject = 'Please add a subject.';
     if (values.message.trim().length < 10) next.message = 'Message should be at least 10 characters.';
     setErrors(next);
     return Object.keys(next).length === 0;
@@ -34,6 +38,7 @@ export function Contact() {
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    if (status === 'submitting') return; // guard against duplicate submits
     if (!validate()) return;
 
     setStatus('submitting');
@@ -52,11 +57,11 @@ export function Contact() {
       }
 
       setStatus('success');
-      setServerMessage(data?.message || 'Thank you — your message has been received.');
-      setValues({ name: '', email: '', message: '' });
+      setServerMessage(data?.message || "Your message has been sent successfully. I'll get back to you soon.");
+      setValues(EMPTY); // reset only after a confirmed success
     } catch (err) {
       setStatus('error');
-      setServerMessage(err instanceof Error ? err.message : 'Unexpected error.');
+      setServerMessage(err instanceof Error ? err.message : 'Unexpected error. Please try again.');
     }
   }
 
@@ -117,7 +122,8 @@ export function Contact() {
             );
           })}
           <p className="px-1 text-xs leading-relaxed text-[var(--text-muted)]/80">
-            The fastest way to reach me is{' '}
+            Prefer email? Messages sent through this form land directly in my inbox. You can also
+            connect on{' '}
             <a
               href={profile.linkedin}
               target="_blank"
@@ -126,13 +132,13 @@ export function Contact() {
             >
               LinkedIn
             </a>
-            . A dedicated professional email will be added here soon.
+            .
           </p>
         </Reveal>
 
         {/* Form */}
         <Reveal delayIndex={1}>
-          <form onSubmit={handleSubmit} noValidate className="panel rounded-2xl p-6 sm:p-8">
+          <form onSubmit={handleSubmit} noValidate className="panel relative rounded-2xl p-6 sm:p-8">
             <div className="grid gap-5 sm:grid-cols-2">
               <Field
                 id="name"
@@ -152,6 +158,32 @@ export function Contact() {
                 onChange={(v) => setValues((s) => ({ ...s, email: v }))}
                 placeholder="you@example.com"
                 autoComplete="email"
+              />
+            </div>
+
+            <div className="mt-5">
+              <Field
+                id="subject"
+                label="Subject"
+                error={errors.subject}
+                value={values.subject}
+                onChange={(v) => setValues((s) => ({ ...s, subject: v }))}
+                placeholder="What's this about?"
+                autoComplete="off"
+              />
+            </div>
+
+            {/* Honeypot — hidden from humans, absorbs bots. */}
+            <div className="absolute left-[-9999px]" aria-hidden>
+              <label htmlFor="company">Company (leave blank)</label>
+              <input
+                id="company"
+                name="company"
+                type="text"
+                tabIndex={-1}
+                autoComplete="off"
+                value={values.company}
+                onChange={(e) => setValues((s) => ({ ...s, company: e.target.value }))}
               />
             </div>
 
@@ -196,8 +228,8 @@ export function Contact() {
             </button>
 
             <p className="mt-3 text-[11px] leading-relaxed text-[var(--text-muted)]/70">
-              Your message is validated and submitted securely. Email delivery is being configured —
-              until then, connecting on LinkedIn is the most reliable way to reach me.
+              Your message is validated and delivered securely to my inbox. I&apos;ll reply to the
+              email address you provide.
             </p>
 
             {status === 'success' && (
