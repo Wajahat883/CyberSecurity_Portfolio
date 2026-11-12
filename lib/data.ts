@@ -20,7 +20,6 @@ import {
   Siren,
   Bug,
   GraduationCap,
-  Briefcase,
   FlaskConical,
 } from 'lucide-react';
 
@@ -86,7 +85,7 @@ export const about = {
   paragraphs: [
     'My path into cybersecurity started with a Computer Science foundation and a growing fascination with how systems are attacked, defended, and investigated. What began as curiosity about web application vulnerabilities has become a focused commitment to defensive security and security operations.',
     'Today I study the blue-team side of security in depth: building familiarity with SOC workflows, learning to analyze telemetry in SIEM platforms like Splunk and Elastic, investigating Windows event and Sysmon logs, and practicing structured threat hunting mapped to the MITRE ATT&CK framework. On the offensive side, I work through OWASP Top 10 issues and web application testing so I can understand attacker behavior well enough to defend against it.',
-    'With around 1.5 years of professional software development experience, I understand firsthand how modern web applications are built and deployed — knowledge that directly informs how I approach their security. Today my focus and ongoing work are dedicated entirely to cybersecurity, and my long-term goal is to grow into Purple Team operations, where offensive and defensive perspectives meet.',
+    'With around 1.5 years of professional software development experience behind me, I now work as a Cybersecurity Penetration Tester — my focus and ongoing work are dedicated entirely to security. That developer background means I understand firsthand how modern web applications are built and deployed, which directly informs how I test and defend them. My long-term goal is to grow into Purple Team operations, where offensive and defensive perspectives meet.',
   ],
   focusAreas: [
     'Defensive security & SOC operations',
@@ -406,22 +405,52 @@ export const education = {
 /* Professional experience                                                    */
 /* -------------------------------------------------------------------------- */
 
-export const experience = {
-  role: 'Junior Frontend Developer',
-  company: 'Comrex Private Limited',
-  companyLocation: 'Islamabad, Pakistan',
-  period: 'June 2024 – Present',
-  icon: Briefcase,
-  summary:
-    'Around 1.5 years building and maintaining modern web interfaces, giving me a hands-on understanding of how web applications are architected and deployed — knowledge that directly supports my web application security work. My current focus and ongoing work are dedicated entirely to cybersecurity.',
-  points: [
-    'Develop responsive, component-based user interfaces for production web applications.',
-    'Work with modern JavaScript frameworks and REST APIs across the frontend stack.',
-    'Collaborate on application architecture, state management and performance.',
-    'Apply secure-by-default frontend practices informed by OWASP web security principles.',
-  ],
-  note: 'This is a web development role — included to show transferable technical skills, not as cybersecurity employment.',
-};
+export interface ExperienceRole {
+  role: string;
+  company: string;
+  companyLocation: string;
+  period: string;
+  current: boolean;
+  icon: LucideIcon;
+  summary: string;
+  points: string[];
+}
+
+// Most recent role first.
+export const experiences: ExperienceRole[] = [
+  {
+    role: 'Cybersecurity Penetration Tester',
+    company: 'Comrex Private Limited',
+    companyLocation: 'Islamabad, Pakistan',
+    period: '2025 – Present', // EDIT: set your exact start month/year
+    current: true,
+    icon: Swords,
+    summary:
+      'Transitioned into a dedicated security role, performing authorized penetration testing and web application security assessments. My work now focuses entirely on cybersecurity rather than software development.',
+    points: [
+      'Conduct authorized penetration tests on web applications and APIs.',
+      'Identify, validate and document vulnerabilities aligned with the OWASP Top 10.',
+      'Assess authentication, session management and access-control weaknesses.',
+      'Produce clear security findings with practical remediation guidance for developers.',
+    ],
+  },
+  {
+    role: 'Software Developer (Frontend)',
+    company: 'Comrex Private Limited',
+    companyLocation: 'Islamabad, Pakistan',
+    period: 'June 2024 – 2025', // EDIT: set the exact end month/year (~1.5 years)
+    current: false,
+    icon: Code2,
+    summary:
+      'Around 1.5 years building and maintaining modern web interfaces — a foundation that gives me a hands-on understanding of how web applications are architected and deployed, which directly strengthens my security work today.',
+    points: [
+      'Built responsive, component-based user interfaces for production web applications.',
+      'Worked with modern JavaScript frameworks and REST APIs across the frontend stack.',
+      'Collaborated on application architecture, state management and performance.',
+      'Applied secure-by-default frontend practices informed by OWASP web security principles.',
+    ],
+  },
+];
 
 /* -------------------------------------------------------------------------- */
 /* Icons re-exported for sections that need them inline                       */

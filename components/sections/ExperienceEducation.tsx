@@ -1,7 +1,7 @@
-import { Briefcase, GraduationCap, BookOpen, Info } from 'lucide-react';
+import { GraduationCap, BookOpen } from 'lucide-react';
 import { Section, SectionHeading } from '@/components/ui/Section';
 import { Reveal } from '@/components/ui/Reveal';
-import { experience, education } from '@/lib/data';
+import { experiences, education } from '@/lib/data';
 
 export function ExperienceEducation() {
   return (
@@ -9,47 +9,62 @@ export function ExperienceEducation() {
       <SectionHeading
         eyebrow="Experience & Education"
         title="Background & Foundation"
-        description="Professional web development experience and academic grounding in computer science."
+        description="A professional path from software development into a dedicated cybersecurity role, grounded in a computer science education."
       />
 
       <div className="grid gap-6 lg:grid-cols-2">
-        {/* Experience */}
-        <Reveal as="article">
-          <div className="glass h-full rounded-xl p-6">
-            <div className="mb-5 flex items-center gap-3">
-              <span className="flex h-11 w-11 items-center justify-center rounded-lg border border-accent-cyan/25 bg-accent-cyan/10">
-                <Briefcase className="h-5 w-5 text-accent-cyan" />
-              </span>
-              <div>
-                <h3 className="font-semibold">{experience.role}</h3>
-                <p className="text-sm text-[var(--text-muted)]">
-                  {experience.company} · {experience.companyLocation}
-                </p>
-              </div>
-            </div>
+        {/* Experience — role timeline */}
+        <Reveal as="div">
+          <div className="glass h-full rounded-xl p-6 sm:p-7">
+            <h3 className="mb-6 font-mono text-xs font-semibold uppercase tracking-[0.18em] text-accent-cyan">
+              Professional Experience
+            </h3>
 
-            <p className="mb-2 font-mono text-xs text-accent-cyan">{experience.period}</p>
-            <p className="text-sm leading-relaxed text-[var(--text-muted)]">{experience.summary}</p>
+            <ol className="relative space-y-7 border-l border-[var(--border)] pl-6">
+              {experiences.map((item) => {
+                const Icon = item.icon;
+                return (
+                  <li key={item.role} className="relative">
+                    {/* Timeline node */}
+                    <span className="absolute -left-[33px] flex h-6 w-6 items-center justify-center rounded-full border border-accent-cyan/30 bg-[var(--surface-solid)]">
+                      <Icon className="h-3 w-3 text-accent-cyan" />
+                    </span>
 
-            <ul className="mt-4 space-y-2">
-              {experience.points.map((point) => (
-                <li key={point} className="flex items-start gap-2 text-sm text-[var(--text)]">
-                  <span className="mt-1.5 h-1 w-1 flex-shrink-0 rounded-full bg-accent-cyan" />
-                  {point}
-                </li>
-              ))}
-            </ul>
+                    <div className="flex flex-wrap items-center gap-2">
+                      <h4 className="font-semibold">{item.role}</h4>
+                      {item.current && (
+                        <span className="inline-flex items-center gap-1 rounded-full bg-accent-cyan/15 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-accent-cyan">
+                          Current
+                        </span>
+                      )}
+                    </div>
+                    <p className="text-sm text-[var(--text-muted)]">
+                      {item.company} · {item.companyLocation}
+                    </p>
+                    <p className="mt-1 font-mono text-xs text-accent-cyan">{item.period}</p>
 
-            <p className="mt-5 flex items-start gap-2 rounded-md bg-[var(--surface)] px-3 py-2 text-xs text-[var(--text-muted)]">
-              <Info className="mt-0.5 h-3.5 w-3.5 flex-shrink-0" />
-              {experience.note}
-            </p>
+                    <p className="mt-3 text-sm leading-relaxed text-[var(--text-muted)]">
+                      {item.summary}
+                    </p>
+
+                    <ul className="mt-3 space-y-1.5">
+                      {item.points.map((point) => (
+                        <li key={point} className="flex items-start gap-2 text-sm text-[var(--text)]">
+                          <span className="mt-1.5 h-1 w-1 flex-shrink-0 rounded-full bg-accent-cyan" />
+                          {point}
+                        </li>
+                      ))}
+                    </ul>
+                  </li>
+                );
+              })}
+            </ol>
           </div>
         </Reveal>
 
         {/* Education */}
-        <Reveal as="article" delayIndex={1}>
-          <div className="glass h-full rounded-xl p-6">
+        <Reveal as="div" delayIndex={1}>
+          <div className="glass h-full rounded-xl p-6 sm:p-7">
             <div className="mb-5 flex items-center gap-3">
               <span className="flex h-11 w-11 items-center justify-center rounded-lg border border-accent-cyan/25 bg-accent-cyan/10">
                 <GraduationCap className="h-5 w-5 text-accent-cyan" />
