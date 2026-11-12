@@ -194,12 +194,13 @@ export const skillCategories: SkillCategory[] = [
   {
     title: 'Purple Team Operations',
     icon: Blend,
-    description: 'Developing — studied and practised in labs, building toward hands-on delivery.',
+    description:
+      'Bridging offensive and defensive security through adversary emulation, detection validation, and security control improvement.',
     skills: [
+      { name: 'MITRE ATT&CK Mapping', level: 'Foundational' },
       { name: 'Adversary Emulation', level: 'Foundational' },
       { name: 'Attack Simulation', level: 'Foundational' },
       { name: 'Detection Validation', level: 'Foundational' },
-      { name: 'MITRE ATT&CK Mapping', level: 'Foundational' },
       { name: 'Detection Gap Analysis', level: 'Foundational' },
       { name: 'Security Control Validation', level: 'Foundational' },
       { name: 'Red / Blue Collaboration', level: 'Foundational' },
@@ -347,7 +348,7 @@ export const projects: Project[] = [
     icon: Bug,
     repoUrl: 'https://github.com/Wajahat883/Bug-Finder',
     image: '/images/projects/bug-finder.png',
-    imageFit: 'contain',
+    imageFit: 'cover',
     featured: true,
   },
   {
@@ -372,7 +373,6 @@ export const projects: Project[] = [
     image: '/images/projects/tasklytics.png',
     imageFit: 'cover',
     liveUrl: 'https://staging.tasklytics.ai/',
-    featured: true,
   },
   {
     title: 'CyberLearn AI',
@@ -393,9 +393,8 @@ export const projects: Project[] = [
     technologies: ['React', 'Node.js', 'MongoDB', 'OpenRouter API'],
     icon: Code2,
     repoUrl: 'https://github.com/Wajahat883/Cyber_Learn',
-    image: '/images/projects/cyberlearn.svg',
+    image: '/images/projects/cyberlearn.png',
     imageFit: 'cover',
-    imageIsConcept: true,
   },
   {
     title: 'HTB Defensive Security Investigations',

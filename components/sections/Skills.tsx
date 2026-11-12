@@ -3,23 +3,42 @@ import { Reveal } from '@/components/ui/Reveal';
 import { skillCategories, type SkillLevel } from '@/lib/data';
 import { cn } from '@/lib/utils';
 
-const levelStyles: Record<SkillLevel, string> = {
-  Foundational: 'border-slate-400/30 text-slate-300/90',
-  Practicing: 'border-accent-blue/40 text-accent-sky',
-  Comfortable: 'border-accent-cyan/50 text-accent-cyan',
-};
-
 const levelDots: Record<SkillLevel, number> = {
   Foundational: 1,
   Practicing: 2,
   Comfortable: 3,
 };
 
-const catAccent: Record<string, { badge: string; icon: string }> = {
-  'Offensive Security': { badge: 'border-rose-400/25 bg-rose-400/10', icon: 'text-rose-300' },
-  'Defensive Security': { badge: 'border-accent-cyan/25 bg-accent-cyan/10', icon: 'text-accent-cyan' },
-  'Purple Team Operations': { badge: 'border-violet-400/25 bg-violet-400/10', icon: 'text-violet-300' },
-  'Networking & Systems': { badge: 'border-accent-blue/25 bg-accent-blue/10', icon: 'text-accent-sky' },
+// Each domain gets ONE consistent accent. Chips are tinted by domain (not by
+// level), so all four cards share the same treatment; the per-skill level is
+// shown honestly by the filled-dot meter instead.
+const catAccent: Record<string, { badge: string; icon: string; chip: string }> = {
+  'Offensive Security': {
+    badge: 'border-rose-400/25 bg-rose-400/10',
+    icon: 'text-rose-300',
+    chip: 'border-rose-400/25 text-rose-200',
+  },
+  'Defensive Security': {
+    badge: 'border-accent-cyan/25 bg-accent-cyan/10',
+    icon: 'text-accent-cyan',
+    chip: 'border-accent-cyan/30 text-accent-cyan',
+  },
+  'Purple Team Operations': {
+    badge: 'border-violet-400/25 bg-violet-400/10',
+    icon: 'text-violet-300',
+    chip: 'border-violet-400/30 text-violet-200',
+  },
+  'Networking & Systems': {
+    badge: 'border-accent-blue/25 bg-accent-blue/10',
+    icon: 'text-accent-sky',
+    chip: 'border-accent-blue/30 text-accent-sky',
+  },
+};
+
+const fallbackAccent = {
+  badge: 'border-accent-cyan/25 bg-accent-cyan/10',
+  icon: 'text-accent-cyan',
+  chip: 'border-accent-cyan/30 text-accent-cyan',
 };
 
 export function Skills() {
@@ -34,29 +53,29 @@ export function Skills() {
       <div className="grid gap-5 md:grid-cols-2">
         {skillCategories.map((category, i) => {
           const Icon = category.icon;
-          const accent = catAccent[category.title] ?? { badge: 'border-accent-cyan/25 bg-accent-cyan/10', icon: 'text-accent-cyan' };
+          const accent = catAccent[category.title] ?? fallbackAccent;
           return (
             <Reveal key={category.title} delayIndex={i} as="article">
-              <div className="panel card-hover h-full rounded-2xl p-6">
+              <div className="panel card-hover flex h-full flex-col rounded-2xl p-6">
                 <div className="mb-5 flex items-start gap-3">
                   <span className={cn('flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg border', accent.badge)}>
                     <Icon className={cn('h-5 w-5', accent.icon)} />
                   </span>
                   <div>
-                    <h3 className="font-semibold">{category.title}</h3>
-                    <p className="mt-0.5 text-xs leading-relaxed text-[var(--text-muted)]">
+                    <h3 className="text-base font-semibold">{category.title}</h3>
+                    <p className="mt-1 text-xs leading-relaxed text-[var(--text-muted)]">
                       {category.description}
                     </p>
                   </div>
                 </div>
 
-                <ul className="flex flex-wrap gap-2">
+                <ul className="mt-1 flex flex-wrap gap-2">
                   {category.skills.map((skill) => (
                     <li
                       key={skill.name}
                       className={cn(
                         'inline-flex items-center gap-1.5 rounded-md border bg-[var(--surface)] px-2.5 py-1 text-xs font-medium',
-                        levelStyles[skill.level]
+                        accent.chip
                       )}
                       title={`${skill.name} — ${skill.level}`}
                     >
@@ -65,10 +84,7 @@ export function Skills() {
                         {[0, 1, 2].map((d) => (
                           <span
                             key={d}
-                            className={cn(
-                              'h-1 w-1 rounded-full',
-                              d < levelDots[skill.level] ? 'bg-current' : 'bg-current/25'
-                            )}
+                            className={cn('h-1 w-1 rounded-full', d < levelDots[skill.level] ? 'bg-current' : 'bg-current/25')}
                           />
                         ))}
                       </span>
@@ -82,16 +98,18 @@ export function Skills() {
       </div>
 
       <Reveal className="mt-8">
-        <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 font-mono text-xs text-[var(--text-muted)]">
-          <span className="flex items-center gap-1.5">
-            <span className="h-1.5 w-1.5 rounded-full bg-slate-400" /> Foundational
-          </span>
-          <span className="flex items-center gap-1.5">
-            <span className="h-1.5 w-1.5 rounded-full bg-accent-sky" /> Practicing
-          </span>
-          <span className="flex items-center gap-1.5">
-            <span className="h-1.5 w-1.5 rounded-full bg-accent-cyan" /> Comfortable
-          </span>
+        <div className="flex flex-wrap items-center justify-center gap-x-7 gap-y-2 font-mono text-xs text-[var(--text-muted)]">
+          <span className="text-[var(--text-muted)]/70">Proficiency</span>
+          {([['Foundational', 1], ['Practicing', 2], ['Comfortable', 3]] as const).map(([label, n]) => (
+            <span key={label} className="flex items-center gap-1.5">
+              <span className="flex gap-0.5 text-accent-cyan">
+                {[0, 1, 2].map((d) => (
+                  <span key={d} className={cn('h-1 w-1 rounded-full', d < n ? 'bg-current' : 'bg-current/25')} />
+                ))}
+              </span>
+              {label}
+            </span>
+          ))}
         </div>
       </Reveal>
     </Section>

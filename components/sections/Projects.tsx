@@ -94,7 +94,7 @@ function Links({ project }: { project: Project }) {
   );
 }
 
-function FeaturedProject({ project, flip }: { project: Project; flip: boolean }) {
+function FeaturedProject({ project }: { project: Project }) {
   return (
     <motion.article
       layout
@@ -102,39 +102,50 @@ function FeaturedProject({ project, flip }: { project: Project; flip: boolean })
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-80px' }}
       transition={{ duration: 0.5 }}
-      className="group panel grid overflow-hidden rounded-2xl lg:grid-cols-2"
+      className="group panel overflow-hidden rounded-2xl"
     >
-      <Cover
-        project={project}
-        className={cn('h-60 border-b border-[var(--border)] lg:h-auto lg:border-b-0', flip ? 'lg:order-2 lg:border-l' : 'lg:border-r')}
-      />
-      <div className="flex flex-col justify-center p-7 sm:p-9">
-        <div className="mb-3 flex items-center gap-3">
-          <span className="eyebrow !text-[0.68rem]">{project.category}</span>
+      {/* Large screenshot banner — 16:10 matches the captured app screenshots exactly */}
+      <div className="relative border-b border-[var(--border)]">
+        <span className="absolute left-4 top-4 z-10 inline-flex items-center gap-1.5 rounded-full bg-base-900/70 px-2.5 py-1 text-[11px] font-semibold text-accent-cyan ring-1 ring-[var(--border)] backdrop-blur-sm">
+          Featured
+        </span>
+        <span className="absolute right-4 top-4 z-10">
           <StatusBadge status={project.status} />
-        </div>
-        <h3 className="text-2xl font-semibold tracking-tight">{project.title}</h3>
-        <p className="mt-3 text-sm leading-relaxed text-[var(--text-muted)]">{project.overview}</p>
+        </span>
+        <Cover project={project} className="aspect-[16/10] w-full" />
+      </div>
 
-        <ul className="mt-5 grid gap-2 sm:grid-cols-2">
-          {project.features.map((f) => (
-            <li key={f} className="flex items-start gap-2 text-[13px] text-[var(--text)]">
-              <Check className="mt-0.5 h-3.5 w-3.5 flex-shrink-0 text-accent-cyan" />
-              {f}
-            </li>
-          ))}
-        </ul>
-
-        <div className="mt-6 flex flex-wrap gap-1.5">
-          {project.technologies.map((t) => (
-            <span key={t} className="rounded-md border border-[var(--border)] bg-[var(--surface)] px-2 py-0.5 font-mono text-[11px] text-[var(--text-muted)]">
-              {t}
-            </span>
-          ))}
+      <div className="grid gap-6 p-7 sm:p-9 lg:grid-cols-[1.3fr_1fr]">
+        <div>
+          <span className="eyebrow !text-[0.68rem]">{project.category}</span>
+          <h3 className="mt-2 text-2xl font-semibold tracking-tight">{project.title}</h3>
+          <p className="mt-3 text-sm leading-relaxed text-[var(--text-muted)]">{project.overview}</p>
+          <p className="mt-4 flex items-start gap-2 text-sm">
+            <span className="eyebrow !text-[0.6rem] mt-0.5">Purpose</span>
+            <span className="text-[var(--text)]">{project.purpose}</span>
+          </p>
         </div>
 
-        <div className="mt-7">
-          <Links project={project} />
+        <div>
+          <p className="mb-2 eyebrow !text-[0.6rem]">Key Features</p>
+          <ul className="grid gap-2">
+            {project.features.map((f) => (
+              <li key={f} className="flex items-start gap-2 text-[13px] text-[var(--text)]">
+                <Check className="mt-0.5 h-3.5 w-3.5 flex-shrink-0 text-accent-cyan" />
+                {f}
+              </li>
+            ))}
+          </ul>
+          <div className="mt-5 flex flex-wrap gap-1.5">
+            {project.technologies.map((t) => (
+              <span key={t} className="rounded-md border border-[var(--border)] bg-[var(--surface)] px-2 py-0.5 font-mono text-[11px] text-[var(--text-muted)]">
+                {t}
+              </span>
+            ))}
+          </div>
+          <div className="mt-6">
+            <Links project={project} />
+          </div>
         </div>
       </div>
     </motion.article>
@@ -230,8 +241,8 @@ export function Projects() {
       </div>
 
       <div className="space-y-6">
-        {featured.map((p, i) => (
-          <FeaturedProject key={p.title} project={p} flip={i % 2 === 1} />
+        {featured.map((p) => (
+          <FeaturedProject key={p.title} project={p} />
         ))}
 
         {supporting.length > 0 && (
