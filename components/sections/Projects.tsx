@@ -96,15 +96,26 @@ function ProjectCard({ project }: { project: Project }) {
       className="group glass card-hover flex flex-col overflow-hidden rounded-xl"
     >
       {/* Cover */}
-      <div className="relative h-40 overflow-hidden border-b border-[var(--border)]">
+      <div className="relative h-44 overflow-hidden border-b border-[var(--border)] bg-base-900">
         {project.image ? (
-          <Image
-            src={project.image}
-            alt={`${project.title} preview`}
-            fill
-            sizes="(max-width: 768px) 100vw, 400px"
-            className="object-cover transition-transform duration-500 group-hover:scale-105"
-          />
+          <>
+            {project.imageFit === 'contain' && (
+              <div
+                className="absolute inset-0 bg-grid-cyber [background-size:26px_26px] opacity-30"
+                aria-hidden
+              />
+            )}
+            <Image
+              src={project.image}
+              alt={`${project.title} ${project.imageIsConcept ? 'conceptual illustration' : 'cover'}`}
+              fill
+              sizes="(max-width: 768px) 100vw, 420px"
+              className={cn(
+                'transition-transform duration-500 group-hover:scale-105',
+                project.imageFit === 'contain' ? 'object-contain p-3' : 'object-cover'
+              )}
+            />
+          </>
         ) : (
           <div
             className={cn(

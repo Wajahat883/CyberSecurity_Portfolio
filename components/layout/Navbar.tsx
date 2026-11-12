@@ -156,6 +156,7 @@ export function Navbar() {
             <li className="mt-2">
               <a
                 href={profile.resumePath}
+                download={profile.resumeDownloadName}
                 className="block rounded-lg bg-accent-cyan px-3 py-3 text-center text-base font-semibold text-base-900"
                 onClick={() => setMenuOpen(false)}
               >

@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" width="1200" height="600" role="img" aria-label="HTB defensive security investigations — conceptual illustration">
+  <defs>
+    <linearGradient id="bg3" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#070a14"/>
+      <stop offset="1" stop-color="#0a0e1c"/>
+    </linearGradient>
+    <pattern id="grid3" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" fill="none" stroke="#38bdf8" stroke-opacity="0.06" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="600" fill="url(#bg3)"/>
+  <rect width="1200" height="600" fill="url(#grid3)"/>
+
+  <rect x="80" y="70" width="1040" height="460" rx="16" fill="#0f1526" stroke="#38bdf8" stroke-opacity="0.18"/>
+  <rect x="80" y="70" width="1040" height="52" rx="16" fill="#141c33"/>
+  <circle cx="112" cy="96" r="7" fill="#f87171"/><circle cx="138" cy="96" r="7" fill="#fbbf24"/><circle cx="164" cy="96" r="7" fill="#34d399"/>
+  <text x="210" y="101" font-family="monospace" font-size="15" fill="#8a99b3">SIEM · investigation console</text>
+
+  <!-- Alert + ATT&CK chips -->
+  <rect x="112" y="150" width="964" height="54" rx="10" fill="#f87171" fill-opacity="0.08" stroke="#f87171" stroke-opacity="0.3"/>
+  <circle cx="142" cy="177" r="10" fill="#f87171" fill-opacity="0.5"/>
+  <text x="166" y="182" font-family="sans-serif" font-size="16" fill="#fca5a5" font-weight="600">ALERT · Suspicious process execution detected</text>
+  <rect x="840" y="164" width="104" height="26" rx="13" fill="#22d3ee" fill-opacity="0.15" stroke="#22d3ee" stroke-opacity="0.4"/>
+  <text x="858" y="182" font-family="monospace" font-size="13" fill="#22d3ee">T1059.001</text>
+  <rect x="952" y="164" width="104" height="26" rx="13" fill="#818cf8" fill-opacity="0.18" stroke="#818cf8" stroke-opacity="0.4"/>
+  <text x="972" y="182" font-family="monospace" font-size="13" fill="#a5b4fc">ATT&amp;CK</text>
+
+  <!-- Log console -->
+  <rect x="112" y="222" width="610" height="278" rx="12" fill="#0a0e1c" stroke="#38bdf8" stroke-opacity="0.12"/>
+  <text x="134" y="252" font-family="monospace" font-size="14" fill="#22d3ee">index=windows EventCode=4688</text>
+  <g font-family="monospace" font-size="13">
+    <text x="134" y="286" fill="#8a99b3">10:42:07  4688  powershell.exe  -enc …</text>
+    <text x="134" y="312" fill="#e6edf6">10:42:09  4688  cmd.exe → whoami /all</text>
+    <text x="134" y="338" fill="#8a99b3">10:42:11  4624  Logon  type=3  svc_admin</text>
+    <text x="134" y="364" fill="#fca5a5">10:42:13  4688  rundll32.exe  (suspicious)</text>
+    <text x="134" y="390" fill="#8a99b3">10:42:15  3     Sysmon  net conn → 185.x</text>
+    <text x="134" y="416" fill="#e6edf6">10:42:18  4688  net.exe  group /domain</text>
+    <text x="134" y="442" fill="#8a99b3">10:42:20  4672  Special privileges assigned</text>
+    <text x="134" y="468" fill="#7dd3fc">› pivot on parent process …</text>
+  </g>
+
+  <!-- Timeline / counts -->
+  <rect x="746" y="222" width="330" height="278" rx="12" fill="#0a0e1c" stroke="#38bdf8" stroke-opacity="0.12"/>
+  <text x="768" y="252" font-family="monospace" font-size="14" fill="#22d3ee">EVENT TIMELINE</text>
+  <g>
+    <rect x="768" y="278" width="40" height="70" rx="4" fill="#22d3ee" fill-opacity="0.35"/>
+    <rect x="818" y="300" width="40" height="48" rx="4" fill="#22d3ee" fill-opacity="0.25"/>
+    <rect x="868" y="268" width="40" height="80" rx="4" fill="#f87171" fill-opacity="0.5"/>
+    <rect x="918" y="292" width="40" height="56" rx="4" fill="#22d3ee" fill-opacity="0.3"/>
+    <rect x="968" y="282" width="40" height="66" rx="4" fill="#818cf8" fill-opacity="0.4"/>
+    <rect x="1018" y="308" width="40" height="40" rx="4" fill="#22d3ee" fill-opacity="0.25"/>
+  </g>
+  <line x1="768" y1="348" x2="1058" y2="348" stroke="#38bdf8" stroke-opacity="0.25"/>
+  <text x="768" y="400" font-family="sans-serif" font-size="14" fill="#e6edf6">Hosts: 3 · Events: 1,284</text>
+  <text x="768" y="426" font-family="sans-serif" font-size="14" fill="#fca5a5">Flagged: 12</text>
+  <text x="768" y="452" font-family="sans-serif" font-size="14" fill="#8a99b3">Mapped to ATT&amp;CK: 5</text>
+
+  <!-- Concept label -->
+  <rect x="844" y="486" width="200" height="28" rx="14" fill="#05070d" stroke="#38bdf8" stroke-opacity="0.25"/>
+  <text x="864" y="505" font-family="monospace" font-size="12" fill="#8a99b3">Conceptual illustration</text>
+</svg>

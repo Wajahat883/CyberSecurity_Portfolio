@@ -53,8 +53,9 @@ export const profile = {
   githubHandle: 'Wajahat883',
   linkedin: 'https://linkedin.com/in/muhammad-wajahat-8292092b7/',
   linkedinHandle: 'muhammad-wajahat',
-  resumePath: '/resume/Muhammad-Wajahat-Resume.pdf',
-  photo: '/images/waji.png',
+  resumePath: '/resume/Muhammad-Wajahat-Cybersecurity-Resume.pdf',
+  resumeDownloadName: 'Muhammad-Wajahat-Cybersecurity-Resume.pdf',
+  photo: '/images/waji.jpeg',
   intro:
     'I am a cybersecurity professional working across offensive and defensive security, with a focus on penetration testing, vulnerability assessment, security monitoring, threat hunting, and security investigations. My approach combines understanding how systems are attacked with learning how to detect, investigate, and strengthen defenses.',
 };
@@ -311,9 +312,12 @@ export interface Project {
   // Do NOT invent these — add the real URL when the repo / demo is available.
   repoUrl?: string;
   liveUrl?: string;
-  // Real screenshot path (e.g. '/images/projects/bug-finder.png') when provided.
-  // When absent, a branded cover placeholder is shown instead of a fake screenshot.
+  // Cover visual. Real project asset where one exists; otherwise a clearly
+  // labeled conceptual illustration (never a fabricated product screenshot).
   image?: string;
+  imageFit?: 'cover' | 'contain';
+  // true when `image` is a conceptual illustration rather than a real screenshot.
+  imageIsConcept?: boolean;
 }
 
 export const projects: Project[] = [
@@ -336,6 +340,9 @@ export const projects: Project[] = [
       'Findings are mapped to CVSS severity and OWASP categories so remediation can be prioritized by risk.',
     technologies: ['Next.js', 'React', 'Node.js', 'MongoDB', 'Docker', 'AI API'],
     icon: Bug,
+    repoUrl: 'https://github.com/Wajahat883/Bug-Finder',
+    image: '/images/projects/bug-finder.png',
+    imageFit: 'contain',
   },
   {
     title: 'Tasklytics — Web App Security Assessment',
@@ -356,6 +363,9 @@ export const projects: Project[] = [
       'Manual testing with Burp Suite against the OWASP Top 10, focused on authentication, session management and access control.',
     technologies: ['Next.js', 'API Routes', 'MongoDB', 'JWT', 'Burp Suite'],
     icon: ShieldCheck,
+    image: '/images/projects/tasklytics.svg',
+    imageFit: 'cover',
+    imageIsConcept: true,
   },
   {
     title: 'CyberLearn AI',
@@ -375,6 +385,10 @@ export const projects: Project[] = [
       'A prompt-engineered pipeline that structures source material into lessons, diagrams and slides.',
     technologies: ['React', 'Node.js', 'MongoDB', 'OpenRouter API'],
     icon: Code2,
+    repoUrl: 'https://github.com/Wajahat883/Cyber_Learn',
+    image: '/images/projects/cyberlearn.svg',
+    imageFit: 'cover',
+    imageIsConcept: true,
   },
   {
     title: 'HTB Defensive Security Investigations',
@@ -395,6 +409,9 @@ export const projects: Project[] = [
       'Analyst workflow: query telemetry, pivot on indicators, and map observed activity to MITRE ATT&CK.',
     technologies: ['Splunk', 'Elastic', 'Windows Logs', 'Sysmon', 'MITRE ATT&CK'],
     icon: Search,
+    image: '/images/projects/htb-defensive.svg',
+    imageFit: 'cover',
+    imageIsConcept: true,
   },
 ];
 

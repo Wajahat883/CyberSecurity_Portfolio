@@ -66,6 +66,7 @@ export function Hero() {
             </a>
             <a
               href={profile.resumePath}
+              download={profile.resumeDownloadName}
               className="inline-flex items-center gap-2 rounded-lg border border-[var(--border-strong)] px-5 py-3 text-sm font-semibold text-[var(--text)] transition-colors hover:border-accent-cyan/50 hover:text-accent-cyan"
             >
               <Download className="h-4 w-4" />
