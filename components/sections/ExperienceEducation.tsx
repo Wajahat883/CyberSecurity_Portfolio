@@ -60,6 +60,15 @@ export function ExperienceEducation() {
               </div>
             </div>
 
+            <div className="mb-5 flex flex-wrap items-center gap-2">
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-accent-cyan/15 px-2.5 py-1 text-[11px] font-semibold text-accent-cyan">
+                {education.status}
+              </span>
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-[var(--border)] px-2.5 py-1 font-mono text-[11px] text-[var(--text-muted)]">
+                {education.expectedGraduation}
+              </span>
+            </div>
+
             <h4 className="mb-3 flex items-center gap-2 font-mono text-xs font-semibold uppercase tracking-[0.18em] text-accent-cyan">
               <BookOpen className="h-3.5 w-3.5" /> Relevant Coursework
             </h4>

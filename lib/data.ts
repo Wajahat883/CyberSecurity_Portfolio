@@ -86,7 +86,7 @@ export const about = {
   paragraphs: [
     'My path into cybersecurity started with a Computer Science foundation and a growing fascination with how systems are attacked, defended, and investigated. What began as curiosity about web application vulnerabilities has become a focused commitment to defensive security and security operations.',
     'Today I study the blue-team side of security in depth: building familiarity with SOC workflows, learning to analyze telemetry in SIEM platforms like Splunk and Elastic, investigating Windows event and Sysmon logs, and practicing structured threat hunting mapped to the MITRE ATT&CK framework. On the offensive side, I work through OWASP Top 10 issues and web application testing so I can understand attacker behavior well enough to defend against it.',
-    'My professional background as a frontend developer gives me a practical understanding of how modern web applications are built — which directly informs how I approach their security. My long-term goal is to grow into Purple Team operations, where offensive and defensive perspectives meet.',
+    'With around 1.5 years of professional software development experience, I understand firsthand how modern web applications are built and deployed — knowledge that directly informs how I approach their security. Today my focus and ongoing work are dedicated entirely to cybersecurity, and my long-term goal is to grow into Purple Team operations, where offensive and defensive perspectives meet.',
   ],
   focusAreas: [
     'Defensive security & SOC operations',
@@ -388,6 +388,8 @@ export const labs: Lab[] = [
 export const education = {
   degree: 'Bachelor of Science in Computer Science (BSCS)',
   institution: 'Virtual University of Pakistan',
+  status: 'In Progress — 4 semesters completed',
+  expectedGraduation: 'Expected graduation: 2028',
   icon: GraduationCap,
   coursework: [
     'Data Structures and Algorithms',
@@ -411,7 +413,7 @@ export const experience = {
   period: 'June 2024 – Present',
   icon: Briefcase,
   summary:
-    'Building and maintaining modern web interfaces, which gives me a hands-on understanding of how web applications are architected — knowledge that directly supports my web application security work.',
+    'Around 1.5 years building and maintaining modern web interfaces, giving me a hands-on understanding of how web applications are architected and deployed — knowledge that directly supports my web application security work. My current focus and ongoing work are dedicated entirely to cybersecurity.',
   points: [
     'Develop responsive, component-based user interfaces for production web applications.',
     'Work with modern JavaScript frameworks and REST APIs across the frontend stack.',
